@@ -1,0 +1,569 @@
+swagger: '2.0'
+info:
+  description: |
+    CityPay Point of Sale API for payment with card present devices including EMV readers and contactless POS readers.
+
+    The API makes it simple to add EMV and contactless card acceptance to iOS, Android, Tablet and desktop applicaitons using a HTTPS protocol. It segregates the complexity of payment processing from the sales environment and eliminates any necessity for the target system to handle card data.
+
+  version: "1.0.0"
+  title: CityPay POS API
+
+  contact:
+    email: dev@citypay.com
+
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+
+tags:
+- name: Payment Module
+  description: |
+    The payment module conducts payment functionality between the host and the target device
+    such as sale, refund and reversal processing.
+- name: Device Module
+  description: |
+    The device module liases with devices configured for the given service and the current status
+    such as battery life and communications.
+
+paths:
+
+  /device/{deviceId}/ping:
+    get:
+      tags:
+      - Device Module
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      summary: Device Ping
+      description: |
+        To monitor or to check whether a device is available, the host can send a simple `GET` request
+        to the URL at `/device/{deviceId}/ping` to see if the device is responding and available.
+      operationId: ping
+      parameters:
+      - name: deviceId
+        in: path
+        description: The name of the target device used by the API.
+        required: true
+        type: string
+      responses:
+        200:
+          description: Response of a ping request
+          schema:
+            $ref: '#/definitions/Result'
+        403:
+          description: Unauthorized to access the device
+          schema:
+            $ref: '#/definitions/Result'
+
+  /device/{deviceId}/info:
+    get:
+      tags:
+      - Device Module
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      summary: Device Information
+      description: |
+        Obtains information regarding the device and to review the current status of a device
+        such as the battery charge, serial number and device type.
+      operationId: deviceInfo
+      parameters:
+      - name: deviceId
+        in: path
+        description: The name of the target device used by the API.
+        required: true
+        type: string
+      responses:
+        200:
+          description: Information on the given device
+          schema:
+            $ref: '#/definitions/DeviceInfo'
+        403:
+          description: Unauthorized to access the device
+          schema:
+            $ref: '#/definitions/Result'
+
+  /sale:
+    post:
+      tags:
+      - Payment Module
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      summary: Sale Transaction
+      description: |
+        Initiates a new sale to a device. The action will contact the device and request a
+        transaction start including the amount and a unique reference to track the transaction
+        through it's lifecycle.
+      operationId: sale
+      parameters:
+      - name: body
+        required: true
+        in: body
+        schema:
+          $ref: '#/definitions/SaleRequest'
+      responses:
+        200:
+          description: Starts a sale request to the device. The device should be polled using a GET /transaction call
+          schema:
+            type: object
+            $ref: '#/definitions/SaleResponse'
+        400:
+          description: bad input parameter
+        403:
+          description: Unauthorized to access the device
+          schema:
+            $ref: '#/definitions/Result'
+
+  /refund:
+    post:
+      tags:
+      - Payment Module
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      summary: Refund Transaction
+      description: |
+              Initiates a new refund to a device. The action will contact the device and request a
+              transaction start including the amount and a unique reference to track the transaction
+              through it's lifecycle.
+      operationId: refund
+      parameters:
+      - name: body
+        required: true
+        in: body
+        schema:
+          $ref: '#/definitions/SaleRequest'
+      responses:
+        200:
+          description: Starts a refund request to the device. The device should be polled using a GET /transaction call
+          schema:
+            type: object
+            $ref: '#/definitions/SaleResponse'
+        400:
+          description: bad input parameter
+        403:
+          description: Unauthorized to access the device
+          schema:
+            $ref: '#/definitions/Result'
+
+  /reversal:
+      post:
+        tags:
+        - Payment Module
+        consumes:
+        - application/json
+        produces:
+        - application/json
+        summary: Reversal Tranasction
+        description: |
+                Initiates a reversal to a device. No confirmation is made and the transaction reversal
+                process is run.
+        operationId: reversal
+        parameters:
+        - name: body
+          required: true
+          in: body
+          schema:
+            $ref: '#/definitions/ReversalRequest'
+        responses:
+          200:
+            description: Starts a reversal request to the device. The device should be polled using a GET /transaction call
+            schema:
+              type: object
+              $ref: '#/definitions/SaleResponse'
+          400:
+            description: bad input parameter
+          403:
+            description: Unauthorized to access the device
+            schema:
+              $ref: '#/definitions/Result'
+
+  /receipt:
+    post:
+      tags:
+      - Payment Module
+      summary: Receipt Print
+      description: |
+        Reprint a merchant or customer receipt for a transaction that exists on the device (i.e. has not been cleared by End of Day process).
+      operationId: receipt
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/TransactionProgress'
+      responses:
+        200:
+          description: Information regarding the progress of the transaction
+          schema:
+            $ref: '#/definitions/TransactionResult'
+        403:
+          description: Unauthorized to access the device
+          schema:
+            $ref: '#/definitions/SuccessResponse'
+
+
+  /transaction:
+    post:
+      tags:
+      - Payment Module
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      summary: Transaction Status
+      description: |
+        Request the status of a transaction in progress or a complete transaction using the identifier as the reference. Depending on the state of the transaction, the response will indicate if it is not found, in progress (and the current stage in the transaction workflow) or complete (with all transaction data).
+      operationId: transaction
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/TransactionProgress'
+      responses:
+        200:
+          description: Information regarding the progress of the transaction
+          schema:
+            $ref: '#/definitions/TransactionResult'
+        403:
+          description: Unauthorized to access the device
+          schema:
+            $ref: '#/definitions/Result'
+
+
+definitions:
+
+  SuccessResponse:
+    type: object
+    required:
+    - success
+    properties:
+      success:
+        type: boolean
+        example: false
+      description:
+        type: string
+        description: Message describing any error
+        example: Transaction in progress
+      status:
+        type: string
+        description: status of the device
+        example: Prompting for payment
+
+  PrintRequest:
+    type: object
+    required:
+    - identifier
+    properties:
+      identifier:
+        type: string
+        description: Must include an identifier for a transaction that has been carried out on the device
+        example: Tx12345
+      type:
+        type: string
+        description: The instruction prints the cardholder copy of the receipt by default. If you want to reprint the merchant copy, append “type”:”merchant” to the body of the request.
+
+  TransactionProgress:
+    type: object
+    required:
+      - identifier
+    properties:
+      identifier:
+        type: string
+        description: The identifier used to instigate the transaction
+        example: Tx12345
+
+
+  TransactionResult:
+    type: object
+    properties:
+      status:
+        type: string
+        description: A description of the status of a transaction
+        example: "EMV: Starting transaction"
+      identifier:
+        type: string
+        description: The indentifier uniquely identifying the transaction
+        example: Tx12345
+      is_complete:
+        type: boolean
+        description: A boolean value stating whether the transaction has completed. The value will be false if the transaction is in progress. Should the value be true, a property containing the transaction details is made available.
+      data:
+        $ref: '#/definitions/TransactionData'
+
+  Receipt:
+    type: object
+    properties:
+      customer:
+        type: string
+        description: The customer receipt to be printed or stored
+
+
+  TransactionData:
+    type: object
+    properties:
+      additional_data:
+        type: string
+        description: additional data provided within the acquirer response
+        example: "000800"
+      auxiliary_data:
+        type: string
+        description: Value provided by online processing
+        example: "CEAB962F"
+      card_type:
+        type: string
+        description: The type of card used such as EMV
+        example: "EMV"
+      completed_at:
+        type: string
+        description: The date and time that the transaction was completed in ISO-8166 format
+        example: '2017-11-01T08:54:23'
+      created_at:
+        type: string
+        description: The date and time that the transaction was created in ISO-8166 format
+        example: '2017-11-01T08:54:09'
+      currency_symbol:
+        type: string
+        description: The currency symbol used
+        example: "£"
+      declined_by_card:
+        type: boolean
+        description: Boolean value should the transaction be declined by the card
+        example: false
+      emv_app_cryptogram:
+        type: string
+        description: Cryptogram used by the card in processing
+        example: "CDC35CA0090BC8"
+      emv_app_expiration_date:
+        type: string
+        description: Expiry date of the card
+        example: "1121"
+      emv_app_txn_counter:
+        type: integer
+        description: A transaction counter, incremented by the device resulting in a transaction number
+        example: 5
+      emv_authorized_amount:
+        type: string
+        description: The amount authorised
+        example: 100
+      emv_cardholder_verification_results:
+        type: string
+        description: Verification results within the processing scope
+        example: "3F0000"
+      emv_country_code:
+        type: string
+        description: A country code returned by the device
+        example: "826"
+      emv_cryptogram_info_data:
+        type: string
+        description: Cryptogram info returned by the card
+        example: "80"
+      emv_icc_appid:
+        type: string
+        description: The application id (AID) identifying the card used
+        example: "A0000000031010"
+      emv_interchange_profile:
+        type: string
+        description: The interchange profile used
+        example: "+00"
+      emv_issuer_app_data:
+        type: string
+        description: Application data provided by the issuer
+        example: "06011103A00000"
+      emv_pan_seq_num:
+        type: string
+        description: Sequence number provided by the card
+        example: "01"
+      emv_terminal_capabilities:
+        type: string
+        description: Terminal capabilities of the device
+        example: "E0B0C8"
+      emv_terminal_type:
+        type: string
+        description: The terminal type of the device
+        example: "22"
+      emv_terminal_verification_results:
+        type: string
+        description: TVR provided by the verification process of the transaction
+        example: "0000000000"
+      emv_track2_equivalent:
+        type: string
+        description: A masked version of the card number
+        example: "4***********0010"
+      emv_txn_currency_code:
+        type: string
+        description: ISO currency code of the transaction
+        example: "840"
+      emv_txn_date:
+        type: string
+        description: ISO date of the transaction
+        example: "2017-11-01"
+      emv_txn_status_info:
+        type: string
+        description: Status info of the transaction
+        example: "0000"
+      emv_txn_type:
+        type: string
+        description: Transacrtion type information returned
+        example: "00"
+      emv_txn_unpredictable_number:
+        type: string
+        description: The UN or unpredicatble number in the transaction process
+        example: "FF10616"
+      is_commercial_card:
+        type: string
+        description: Determines if the card was a commercial card
+        example: false
+      is_contactless:
+        type: string
+        description: Determines if the card was contactless
+        example: true
+      is_fallback:
+        type: string
+        description: Determines if fallback was used
+        example: false
+      is_offline:
+        type: string
+        description: Determines if the transaction was authorised offline
+        example: false
+      is_voided:
+        type: string
+        description: Determines if the transaction was voided
+        example: false
+      response_code:
+        type: string
+        description: A response code provided by the acquirer
+        example: "00"
+      response_text:
+        type: string
+        description: The response text returned by the acquirer
+        example: "AUTH CODE 604405"
+      result:
+        type: string
+        description: A text result of the transaction
+        example: "approved"
+      scheme:
+        type: string
+        description: A description of the card scheme for the card
+        example: "visa-qvsdc"
+      signature_required:
+        type: string
+        description: Determines whether a signature was required for legacy systems
+        example: false
+      terminal_id:
+        type: string
+        description: The terminal id used from the device
+        example: "33420006"
+      total_amount:
+        type: integer
+        description: The total amount processed
+        example: 100
+      transaction_type:
+        type: string
+        description: The type of transaction processed
+        example: "sale"
+      verified_by_pin:
+        type: boolean
+        description: Determines if the transaction was verified by pin entry
+        example: false
+
+
+  DeviceInfo:
+    type: object
+    properties:
+      name:
+        type: string
+        description: The name of the device
+      serialno:
+        type: string
+        description: The serial number of the device
+      portable:
+        type: boolean
+        description: Whether the device is portable
+      busy:
+        type: boolean
+        description: Whether the device is busy or available for a transaction
+      battery_charging:
+        type: boolean
+        description: Whether the device is currently charging
+      battery_percentage:
+        type: integer
+        description: A percentage value of the battery
+      printer:
+        type: boolean
+        description: Whether the device has a printer
+
+  Result:
+    type: object
+    required:
+      - message
+      - success
+    properties:
+      message:
+        type: string
+        description: A message related to the request. If the action was successful the message will contain information that may be disaplyed back to the end user or if the action success is false, the message will contain an error message explaining the error. The message will not convey sensitive information.
+      success:
+        type: boolean
+        description: A boolean result of the action requested
+
+  SaleRequest:
+    type: object
+    description: A request for a sale
+    required:
+    - device
+    - amount
+    - identifier
+    properties:
+      device:
+        type: string
+        description: The name of the target device used by the API. The device will be setup prior to the sale but allows targeting of multiple devices.
+        example: TID001
+      amount:
+        type: integer
+        description: The amount to process in the lowest denomination and in the base currency of the device. 4798 for instance would process the transaction for £47.98
+        example: 4798
+      identifier:
+        type: string
+        description: An identifier or reference for the sale as taken by the point of sale system. This should be used to cross reference transactions after it has processed. The value
+          should be unique and will be used to check on the processing of the transaction.
+        example: Tx12345
+
+  ReversalRequest:
+    type: object
+    required:
+    - identifier
+    properties:
+      identifier:
+        type: string
+        description: The identifier of a transaction to reverse
+
+  SaleResponse:
+    type: object
+    required:
+    - success
+    - identifier
+    properties:
+      success:
+        type: boolean
+        description: Defines whether the sale was successfully created
+      identifier:
+        type: string
+        example: Tx12345
+        description: The identifier presented to the sale request
+      description:
+        type: string
+        description: Description should the sale request not be accepted
+
+schemes:
+ - https
+
+host: pos.citypay.com
+basePath: /citypay-pos-api/1.0.0
