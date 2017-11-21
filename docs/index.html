@@ -1,0 +1,2069 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CityPay POS API | API Reference</title>
+    <link rel="stylesheet" href="stylesheets/foundation.min.css" />
+    <link rel="stylesheet" href="stylesheets/spectacle.min.css" />
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <!-- <script src="javascripts/foundation.js"></script> -->
+    <script src="javascripts/spectacle.min.js"></script>
+  </head>
+  <body id="spectacle">
+    <div id="page" class="drawer-layout drawer-slide-right-large">
+      <div id="sidebar">
+        <button class="close-button" aria-label="Close menu" type="button" data-drawer-close>
+          <span aria-hidden="true">×</span>
+        </button>
+        <div id="logo">
+          <img src="images/logo.png" title="CityPay POS API" /> </div>
+        <nav id="nav" role="navigation">
+          <h5>API Reference</h5>
+          <a href="#introduction">Introduction</a>
+          <h5>Operations</h5>
+          <section>
+            <a href="#tag-Payment-Module">Payment Module</a>
+            <ul>
+              <li>
+                <a href="#operation--sale-post"> Sale Transaction </a>
+              </li>
+              <li>
+                <a href="#operation--refund-post"> Refund Transaction </a>
+              </li>
+              <li>
+                <a href="#operation--reversal-post"> Reversal Tranasction </a>
+              </li>
+              <li>
+                <a href="#operation--receipt-post"> Receipt Print </a>
+              </li>
+              <li>
+                <a href="#operation--transaction-post"> Transaction Status </a>
+              </li>
+            </ul>
+          </section>
+          <section>
+            <a href="#tag-Device-Module">Device Module</a>
+            <ul>
+              <li>
+                <a href="#operation--device--deviceId--ping-get"> Device Ping </a>
+              </li>
+              <li>
+                <a href="#operation--device--deviceId--info-get"> Device Information </a>
+              </li>
+            </ul>
+          </section>
+          <h5>Schema Definitions</h5>
+          <a href="#definition-SuccessResponse"> SuccessResponse </a>
+          <a href="#definition-PrintRequest"> PrintRequest </a>
+          <a href="#definition-TransactionProgress"> TransactionProgress </a>
+          <a href="#definition-TransactionResult"> TransactionResult </a>
+          <a href="#definition-Receipt"> Receipt </a>
+          <a href="#definition-TransactionData"> TransactionData </a>
+          <a href="#definition-DeviceInfo"> DeviceInfo </a>
+          <a href="#definition-Result"> Result </a>
+          <a href="#definition-SaleRequest"> SaleRequest </a>
+          <a href="#definition-ReversalRequest"> ReversalRequest </a>
+          <a href="#definition-SaleResponse"> SaleResponse </a>
+        </nav>
+      </div>
+      <div id="docs" class="row collapse expanded drawer" data-drawer>
+        <button class="floating-menu-icon" type="button" data-drawer-slide="right">
+          <span class="hamburger"></span>
+        </button>
+        <div class="example-box doc-content"></div>
+        <article>
+          <div id="introduction" data-traverse-target="introduction">
+            <h1 class="doc-title">CityPay POS API
+              <span>API Reference</span>
+            </h1>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <p>CityPay Point of Sale API for payment with card present devices including EMV readers and contactless POS readers.</p>
+                <p>The API makes it simple to add EMV and contactless card acceptance to iOS, Android, Tablet and desktop applicaitons using a HTTPS protocol. It segregates the complexity of payment processing from the sales environment and eliminates any necessity for the target system to handle card data.</p>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>API Endpoint</h5>
+                  <!-- <div class="hljs"> --><pre><code>https://pos.citypay.com/citypay-pos-api/1.0.0</code></pre>
+                  <!-- </div> -->
+                  <h5>Contact:
+                    <a href="mailto:dev@citypay.com">dev@citypay.com</a>
+                  </h5>
+                  <h5>Schemes:
+                    <span>https</span>
+                  </h5>
+                  <h5>Version:
+                    <span>1.0.0</span>
+                  </h5>
+                </section>
+              </div>
+            </div>
+          </div>
+          <h1 id="tag-Payment-Module" class="swagger-summary-tag" data-traverse-target="tag-Payment-Module">Payment Module</h1>
+          <div class="tag-description doc-row">
+            <div class="doc-copy">
+              <p>The payment module conducts payment functionality between the host and the target device such as sale, refund and reversal processing.</p>
+            </div>
+          </div>
+          <div id="operation--sale-post" class="operation panel" data-traverse-target="operation--sale-post">
+            <!-- <section class="operation-tags row"> -->
+            <!-- <div class="doc-copy"> -->
+            <div class="operation-tags">
+              <a class="label" href="#tag-Payment-Module">Payment Module</a>
+              <!---->
+            </div>
+            <!-- </div> -->
+            <!-- </section> -->
+            <h2 class="operation-title">
+              <span class="operation-summary">Sale Transaction</span>
+            </h2>
+            <div class="doc-row content-types">
+              <div class="doc-copy"> </div>
+              <div class="doc-examples"> </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-operation-path">
+                  <span class="operation-method">POST</span>
+                  <span class="operation-path">/sale</span>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-operation-description">
+                  <p>Initiates a new sale to a device. The action will contact the device and request a transaction start including the amount and a unique reference to track the transaction through it&#39;s lifecycle.</p>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-request-body">
+                  <div class="prop-row">
+                    <div class="prop-name">
+                      <div class="swagger-request-model">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/SaleRequest">SaleRequest</a>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="prop-value columns small-6">
+                      <!-- <div class="swagger-request-description"> -->undefined
+                      <!-- </div> -->
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Request Content-Types:
+                    <span>application/json</span>
+                  </h5>
+                  <h5>Request Example</h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;device&quot;</span>: <span class="hljs-string">&quot;TID001&quot;</span>,
+  <span class="hljs-attr">&quot;amount&quot;</span>: <span class="hljs-number">4798</span>,
+  <span class="hljs-attr">&quot;identifier&quot;</span>: <span class="hljs-string">&quot;Tx12345&quot;</span>
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-responses">
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">200 OK</div>
+                      <div class="prop-ref">
+                        <span class="json-schema-ref-object">
+                          <a class="json-schema-ref" href="#/definitions/SaleResponse">SaleResponse</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Starts a sale request to the device. The device should be polled using a GET /transaction call</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">400 Bad Request</div>
+                    </div>
+                    <div class="prop-value">
+                      <p>bad input parameter</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">403 Forbidden</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/Result">Result</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Unauthorized to access the device</p>
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <h5>Response Content-Types:
+                  <span>application/json</span>
+                </h5>
+                <section>
+                  <h5>Response Example
+                    <span>(200 OK)</span>
+                  </h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;success&quot;</span>: <span class="hljs-string">&quot;boolean&quot;</span>,
+  <span class="hljs-attr">&quot;identifier&quot;</span>: <span class="hljs-string">&quot;Tx12345&quot;</span>,
+  <span class="hljs-attr">&quot;description&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+                <section>
+                  <h5>Response Example
+                    <span>(403 Forbidden)</span>
+                  </h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;message&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;success&quot;</span>: <span class="hljs-string">&quot;boolean&quot;</span>
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="operation--refund-post" class="operation panel" data-traverse-target="operation--refund-post">
+            <!-- <section class="operation-tags row"> -->
+            <!-- <div class="doc-copy"> -->
+            <div class="operation-tags">
+              <a class="label" href="#tag-Payment-Module">Payment Module</a>
+              <!---->
+            </div>
+            <!-- </div> -->
+            <!-- </section> -->
+            <h2 class="operation-title">
+              <span class="operation-summary">Refund Transaction</span>
+            </h2>
+            <div class="doc-row content-types">
+              <div class="doc-copy"> </div>
+              <div class="doc-examples"> </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-operation-path">
+                  <span class="operation-method">POST</span>
+                  <span class="operation-path">/refund</span>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-operation-description">
+                  <p>Initiates a new refund to a device. The action will contact the device and request a transaction start including the amount and a unique reference to track the transaction through it&#39;s lifecycle.</p>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-request-body">
+                  <div class="prop-row">
+                    <div class="prop-name">
+                      <div class="swagger-request-model">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/SaleRequest">SaleRequest</a>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="prop-value columns small-6">
+                      <!-- <div class="swagger-request-description"> -->undefined
+                      <!-- </div> -->
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Request Content-Types:
+                    <span>application/json</span>
+                  </h5>
+                  <h5>Request Example</h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;device&quot;</span>: <span class="hljs-string">&quot;TID001&quot;</span>,
+  <span class="hljs-attr">&quot;amount&quot;</span>: <span class="hljs-number">4798</span>,
+  <span class="hljs-attr">&quot;identifier&quot;</span>: <span class="hljs-string">&quot;Tx12345&quot;</span>
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-responses">
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">200 OK</div>
+                      <div class="prop-ref">
+                        <span class="json-schema-ref-object">
+                          <a class="json-schema-ref" href="#/definitions/SaleResponse">SaleResponse</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Starts a refund request to the device. The device should be polled using a GET /transaction call</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">400 Bad Request</div>
+                    </div>
+                    <div class="prop-value">
+                      <p>bad input parameter</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">403 Forbidden</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/Result">Result</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Unauthorized to access the device</p>
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <h5>Response Content-Types:
+                  <span>application/json</span>
+                </h5>
+                <section>
+                  <h5>Response Example
+                    <span>(200 OK)</span>
+                  </h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;success&quot;</span>: <span class="hljs-string">&quot;boolean&quot;</span>,
+  <span class="hljs-attr">&quot;identifier&quot;</span>: <span class="hljs-string">&quot;Tx12345&quot;</span>,
+  <span class="hljs-attr">&quot;description&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+                <section>
+                  <h5>Response Example
+                    <span>(403 Forbidden)</span>
+                  </h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;message&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;success&quot;</span>: <span class="hljs-string">&quot;boolean&quot;</span>
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="operation--reversal-post" class="operation panel" data-traverse-target="operation--reversal-post">
+            <!-- <section class="operation-tags row"> -->
+            <!-- <div class="doc-copy"> -->
+            <div class="operation-tags">
+              <a class="label" href="#tag-Payment-Module">Payment Module</a>
+              <!---->
+            </div>
+            <!-- </div> -->
+            <!-- </section> -->
+            <h2 class="operation-title">
+              <span class="operation-summary">Reversal Tranasction</span>
+            </h2>
+            <div class="doc-row content-types">
+              <div class="doc-copy"> </div>
+              <div class="doc-examples"> </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-operation-path">
+                  <span class="operation-method">POST</span>
+                  <span class="operation-path">/reversal</span>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-operation-description">
+                  <p>Initiates a reversal to a device. No confirmation is made and the transaction reversal process is run.</p>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-request-body">
+                  <div class="prop-row">
+                    <div class="prop-name">
+                      <div class="swagger-request-model">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/ReversalRequest">ReversalRequest</a>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="prop-value columns small-6">
+                      <!-- <div class="swagger-request-description"> -->undefined
+                      <!-- </div> -->
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Request Content-Types:
+                    <span>application/json</span>
+                  </h5>
+                  <h5>Request Example</h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;identifier&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-responses">
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">200 OK</div>
+                      <div class="prop-ref">
+                        <span class="json-schema-ref-object">
+                          <a class="json-schema-ref" href="#/definitions/SaleResponse">SaleResponse</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Starts a reversal request to the device. The device should be polled using a GET /transaction call</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">400 Bad Request</div>
+                    </div>
+                    <div class="prop-value">
+                      <p>bad input parameter</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">403 Forbidden</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/Result">Result</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Unauthorized to access the device</p>
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <h5>Response Content-Types:
+                  <span>application/json</span>
+                </h5>
+                <section>
+                  <h5>Response Example
+                    <span>(200 OK)</span>
+                  </h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;success&quot;</span>: <span class="hljs-string">&quot;boolean&quot;</span>,
+  <span class="hljs-attr">&quot;identifier&quot;</span>: <span class="hljs-string">&quot;Tx12345&quot;</span>,
+  <span class="hljs-attr">&quot;description&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+                <section>
+                  <h5>Response Example
+                    <span>(403 Forbidden)</span>
+                  </h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;message&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;success&quot;</span>: <span class="hljs-string">&quot;boolean&quot;</span>
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="operation--receipt-post" class="operation panel" data-traverse-target="operation--receipt-post">
+            <!-- <section class="operation-tags row"> -->
+            <!-- <div class="doc-copy"> -->
+            <div class="operation-tags">
+              <a class="label" href="#tag-Payment-Module">Payment Module</a>
+              <!---->
+            </div>
+            <!-- </div> -->
+            <!-- </section> -->
+            <h2 class="operation-title">
+              <span class="operation-summary">Receipt Print</span>
+            </h2>
+            <div class="doc-row content-types">
+              <div class="doc-copy"> </div>
+              <div class="doc-examples"> </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-operation-path">
+                  <span class="operation-method">POST</span>
+                  <span class="operation-path">/receipt</span>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-operation-description">
+                  <p>Reprint a merchant or customer receipt for a transaction that exists on the device (i.e. has not been cleared by End of Day process).</p>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-request-body">
+                  <div class="prop-row">
+                    <div class="prop-name">
+                      <div class="swagger-request-model">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/TransactionProgress">TransactionProgress</a>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="prop-value columns small-6">
+                      <!-- <div class="swagger-request-description"> -->undefined
+                      <!-- </div> -->
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Request Content-Types:
+                    <span>application/json</span>
+                  </h5>
+                  <h5>Request Example</h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;identifier&quot;</span>: <span class="hljs-string">&quot;Tx12345&quot;</span>
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-responses">
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">200 OK</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/TransactionResult">TransactionResult</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Information regarding the progress of the transaction</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">403 Forbidden</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/SuccessResponse">SuccessResponse</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Unauthorized to access the device</p>
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <h5>Response Content-Types:
+                  <span>application/json</span>
+                </h5>
+                <section>
+                  <h5>Response Example
+                    <span>(200 OK)</span>
+                  </h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;status&quot;</span>: <span class="hljs-string">&quot;EMV: Starting transaction&quot;</span>,
+  <span class="hljs-attr">&quot;identifier&quot;</span>: <span class="hljs-string">&quot;Tx12345&quot;</span>,
+  <span class="hljs-attr">&quot;is_complete&quot;</span>: <span class="hljs-string">&quot;boolean&quot;</span>,
+  <span class="hljs-attr">&quot;data&quot;</span>: {
+    <span class="hljs-attr">&quot;additional_data&quot;</span>: <span class="hljs-string">&quot;000800&quot;</span>,
+    <span class="hljs-attr">&quot;auxiliary_data&quot;</span>: <span class="hljs-string">&quot;CEAB962F&quot;</span>,
+    <span class="hljs-attr">&quot;card_type&quot;</span>: <span class="hljs-string">&quot;EMV&quot;</span>,
+    <span class="hljs-attr">&quot;completed_at&quot;</span>: <span class="hljs-string">&quot;2017-11-01T08:54:23&quot;</span>,
+    <span class="hljs-attr">&quot;created_at&quot;</span>: <span class="hljs-string">&quot;2017-11-01T08:54:09&quot;</span>,
+    <span class="hljs-attr">&quot;currency_symbol&quot;</span>: <span class="hljs-string">&quot;&#xA3;&quot;</span>,
+    <span class="hljs-attr">&quot;declined_by_card&quot;</span>: <span class="hljs-literal">false</span>,
+    <span class="hljs-attr">&quot;emv_app_cryptogram&quot;</span>: <span class="hljs-string">&quot;CDC35CA0090BC8&quot;</span>,
+    <span class="hljs-attr">&quot;emv_app_expiration_date&quot;</span>: <span class="hljs-string">&quot;1121&quot;</span>,
+    <span class="hljs-attr">&quot;emv_app_txn_counter&quot;</span>: <span class="hljs-number">5</span>,
+    <span class="hljs-attr">&quot;emv_authorized_amount&quot;</span>: <span class="hljs-number">100</span>,
+    <span class="hljs-attr">&quot;emv_cardholder_verification_results&quot;</span>: <span class="hljs-string">&quot;3F0000&quot;</span>,
+    <span class="hljs-attr">&quot;emv_country_code&quot;</span>: <span class="hljs-string">&quot;826&quot;</span>,
+    <span class="hljs-attr">&quot;emv_cryptogram_info_data&quot;</span>: <span class="hljs-string">&quot;80&quot;</span>,
+    <span class="hljs-attr">&quot;emv_icc_appid&quot;</span>: <span class="hljs-string">&quot;A0000000031010&quot;</span>,
+    <span class="hljs-attr">&quot;emv_interchange_profile&quot;</span>: <span class="hljs-string">&quot;+00&quot;</span>,
+    <span class="hljs-attr">&quot;emv_issuer_app_data&quot;</span>: <span class="hljs-string">&quot;06011103A00000&quot;</span>,
+    <span class="hljs-attr">&quot;emv_pan_seq_num&quot;</span>: <span class="hljs-string">&quot;01&quot;</span>,
+    <span class="hljs-attr">&quot;emv_terminal_capabilities&quot;</span>: <span class="hljs-string">&quot;E0B0C8&quot;</span>,
+    <span class="hljs-attr">&quot;emv_terminal_type&quot;</span>: <span class="hljs-string">&quot;22&quot;</span>,
+    <span class="hljs-attr">&quot;emv_terminal_verification_results&quot;</span>: <span class="hljs-string">&quot;0000000000&quot;</span>,
+    <span class="hljs-attr">&quot;emv_track2_equivalent&quot;</span>: <span class="hljs-string">&quot;4***********0010&quot;</span>,
+    <span class="hljs-attr">&quot;emv_txn_currency_code&quot;</span>: <span class="hljs-string">&quot;840&quot;</span>,
+    <span class="hljs-attr">&quot;emv_txn_date&quot;</span>: <span class="hljs-string">&quot;2017-11-01&quot;</span>,
+    <span class="hljs-attr">&quot;emv_txn_status_info&quot;</span>: <span class="hljs-string">&quot;0000&quot;</span>,
+    <span class="hljs-attr">&quot;emv_txn_type&quot;</span>: <span class="hljs-string">&quot;00&quot;</span>,
+    <span class="hljs-attr">&quot;emv_txn_unpredictable_number&quot;</span>: <span class="hljs-string">&quot;FF10616&quot;</span>,
+    <span class="hljs-attr">&quot;is_commercial_card&quot;</span>: <span class="hljs-literal">false</span>,
+    <span class="hljs-attr">&quot;is_contactless&quot;</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">&quot;is_fallback&quot;</span>: <span class="hljs-literal">false</span>,
+    <span class="hljs-attr">&quot;is_offline&quot;</span>: <span class="hljs-literal">false</span>,
+    <span class="hljs-attr">&quot;is_voided&quot;</span>: <span class="hljs-literal">false</span>,
+    <span class="hljs-attr">&quot;response_code&quot;</span>: <span class="hljs-string">&quot;00&quot;</span>,
+    <span class="hljs-attr">&quot;response_text&quot;</span>: <span class="hljs-string">&quot;AUTH CODE 604405&quot;</span>,
+    <span class="hljs-attr">&quot;result&quot;</span>: <span class="hljs-string">&quot;approved&quot;</span>,
+    <span class="hljs-attr">&quot;scheme&quot;</span>: <span class="hljs-string">&quot;visa-qvsdc&quot;</span>,
+    <span class="hljs-attr">&quot;signature_required&quot;</span>: <span class="hljs-literal">false</span>,
+    <span class="hljs-attr">&quot;terminal_id&quot;</span>: <span class="hljs-string">&quot;33420006&quot;</span>,
+    <span class="hljs-attr">&quot;total_amount&quot;</span>: <span class="hljs-number">100</span>,
+    <span class="hljs-attr">&quot;transaction_type&quot;</span>: <span class="hljs-string">&quot;sale&quot;</span>,
+    <span class="hljs-attr">&quot;verified_by_pin&quot;</span>: <span class="hljs-literal">false</span>
+  }
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+                <section>
+                  <h5>Response Example
+                    <span>(403 Forbidden)</span>
+                  </h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;success&quot;</span>: <span class="hljs-literal">false</span>,
+  <span class="hljs-attr">&quot;description&quot;</span>: <span class="hljs-string">&quot;Transaction in progress&quot;</span>,
+  <span class="hljs-attr">&quot;status&quot;</span>: <span class="hljs-string">&quot;Prompting for payment&quot;</span>
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="operation--transaction-post" class="operation panel" data-traverse-target="operation--transaction-post">
+            <!-- <section class="operation-tags row"> -->
+            <!-- <div class="doc-copy"> -->
+            <div class="operation-tags">
+              <a class="label" href="#tag-Payment-Module">Payment Module</a>
+              <!---->
+            </div>
+            <!-- </div> -->
+            <!-- </section> -->
+            <h2 class="operation-title">
+              <span class="operation-summary">Transaction Status</span>
+            </h2>
+            <div class="doc-row content-types">
+              <div class="doc-copy"> </div>
+              <div class="doc-examples"> </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-operation-path">
+                  <span class="operation-method">POST</span>
+                  <span class="operation-path">/transaction</span>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-operation-description">
+                  <p>Request the status of a transaction in progress or a complete transaction using the identifier as the reference. Depending on the state of the transaction, the response will indicate if it is not found, in progress (and the current stage in the transaction workflow) or complete (with all transaction data).</p>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-request-body">
+                  <div class="prop-row">
+                    <div class="prop-name">
+                      <div class="swagger-request-model">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/TransactionProgress">TransactionProgress</a>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="prop-value columns small-6">
+                      <!-- <div class="swagger-request-description"> -->undefined
+                      <!-- </div> -->
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Request Content-Types:
+                    <span>application/json</span>
+                  </h5>
+                  <h5>Request Example</h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;identifier&quot;</span>: <span class="hljs-string">&quot;Tx12345&quot;</span>
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-responses">
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">200 OK</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/TransactionResult">TransactionResult</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Information regarding the progress of the transaction</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">403 Forbidden</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/Result">Result</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Unauthorized to access the device</p>
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <h5>Response Content-Types:
+                  <span>application/json</span>
+                </h5>
+                <section>
+                  <h5>Response Example
+                    <span>(200 OK)</span>
+                  </h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;status&quot;</span>: <span class="hljs-string">&quot;EMV: Starting transaction&quot;</span>,
+  <span class="hljs-attr">&quot;identifier&quot;</span>: <span class="hljs-string">&quot;Tx12345&quot;</span>,
+  <span class="hljs-attr">&quot;is_complete&quot;</span>: <span class="hljs-string">&quot;boolean&quot;</span>,
+  <span class="hljs-attr">&quot;data&quot;</span>: {
+    <span class="hljs-attr">&quot;additional_data&quot;</span>: <span class="hljs-string">&quot;000800&quot;</span>,
+    <span class="hljs-attr">&quot;auxiliary_data&quot;</span>: <span class="hljs-string">&quot;CEAB962F&quot;</span>,
+    <span class="hljs-attr">&quot;card_type&quot;</span>: <span class="hljs-string">&quot;EMV&quot;</span>,
+    <span class="hljs-attr">&quot;completed_at&quot;</span>: <span class="hljs-string">&quot;2017-11-01T08:54:23&quot;</span>,
+    <span class="hljs-attr">&quot;created_at&quot;</span>: <span class="hljs-string">&quot;2017-11-01T08:54:09&quot;</span>,
+    <span class="hljs-attr">&quot;currency_symbol&quot;</span>: <span class="hljs-string">&quot;&#xA3;&quot;</span>,
+    <span class="hljs-attr">&quot;declined_by_card&quot;</span>: <span class="hljs-literal">false</span>,
+    <span class="hljs-attr">&quot;emv_app_cryptogram&quot;</span>: <span class="hljs-string">&quot;CDC35CA0090BC8&quot;</span>,
+    <span class="hljs-attr">&quot;emv_app_expiration_date&quot;</span>: <span class="hljs-string">&quot;1121&quot;</span>,
+    <span class="hljs-attr">&quot;emv_app_txn_counter&quot;</span>: <span class="hljs-number">5</span>,
+    <span class="hljs-attr">&quot;emv_authorized_amount&quot;</span>: <span class="hljs-number">100</span>,
+    <span class="hljs-attr">&quot;emv_cardholder_verification_results&quot;</span>: <span class="hljs-string">&quot;3F0000&quot;</span>,
+    <span class="hljs-attr">&quot;emv_country_code&quot;</span>: <span class="hljs-string">&quot;826&quot;</span>,
+    <span class="hljs-attr">&quot;emv_cryptogram_info_data&quot;</span>: <span class="hljs-string">&quot;80&quot;</span>,
+    <span class="hljs-attr">&quot;emv_icc_appid&quot;</span>: <span class="hljs-string">&quot;A0000000031010&quot;</span>,
+    <span class="hljs-attr">&quot;emv_interchange_profile&quot;</span>: <span class="hljs-string">&quot;+00&quot;</span>,
+    <span class="hljs-attr">&quot;emv_issuer_app_data&quot;</span>: <span class="hljs-string">&quot;06011103A00000&quot;</span>,
+    <span class="hljs-attr">&quot;emv_pan_seq_num&quot;</span>: <span class="hljs-string">&quot;01&quot;</span>,
+    <span class="hljs-attr">&quot;emv_terminal_capabilities&quot;</span>: <span class="hljs-string">&quot;E0B0C8&quot;</span>,
+    <span class="hljs-attr">&quot;emv_terminal_type&quot;</span>: <span class="hljs-string">&quot;22&quot;</span>,
+    <span class="hljs-attr">&quot;emv_terminal_verification_results&quot;</span>: <span class="hljs-string">&quot;0000000000&quot;</span>,
+    <span class="hljs-attr">&quot;emv_track2_equivalent&quot;</span>: <span class="hljs-string">&quot;4***********0010&quot;</span>,
+    <span class="hljs-attr">&quot;emv_txn_currency_code&quot;</span>: <span class="hljs-string">&quot;840&quot;</span>,
+    <span class="hljs-attr">&quot;emv_txn_date&quot;</span>: <span class="hljs-string">&quot;2017-11-01&quot;</span>,
+    <span class="hljs-attr">&quot;emv_txn_status_info&quot;</span>: <span class="hljs-string">&quot;0000&quot;</span>,
+    <span class="hljs-attr">&quot;emv_txn_type&quot;</span>: <span class="hljs-string">&quot;00&quot;</span>,
+    <span class="hljs-attr">&quot;emv_txn_unpredictable_number&quot;</span>: <span class="hljs-string">&quot;FF10616&quot;</span>,
+    <span class="hljs-attr">&quot;is_commercial_card&quot;</span>: <span class="hljs-literal">false</span>,
+    <span class="hljs-attr">&quot;is_contactless&quot;</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">&quot;is_fallback&quot;</span>: <span class="hljs-literal">false</span>,
+    <span class="hljs-attr">&quot;is_offline&quot;</span>: <span class="hljs-literal">false</span>,
+    <span class="hljs-attr">&quot;is_voided&quot;</span>: <span class="hljs-literal">false</span>,
+    <span class="hljs-attr">&quot;response_code&quot;</span>: <span class="hljs-string">&quot;00&quot;</span>,
+    <span class="hljs-attr">&quot;response_text&quot;</span>: <span class="hljs-string">&quot;AUTH CODE 604405&quot;</span>,
+    <span class="hljs-attr">&quot;result&quot;</span>: <span class="hljs-string">&quot;approved&quot;</span>,
+    <span class="hljs-attr">&quot;scheme&quot;</span>: <span class="hljs-string">&quot;visa-qvsdc&quot;</span>,
+    <span class="hljs-attr">&quot;signature_required&quot;</span>: <span class="hljs-literal">false</span>,
+    <span class="hljs-attr">&quot;terminal_id&quot;</span>: <span class="hljs-string">&quot;33420006&quot;</span>,
+    <span class="hljs-attr">&quot;total_amount&quot;</span>: <span class="hljs-number">100</span>,
+    <span class="hljs-attr">&quot;transaction_type&quot;</span>: <span class="hljs-string">&quot;sale&quot;</span>,
+    <span class="hljs-attr">&quot;verified_by_pin&quot;</span>: <span class="hljs-literal">false</span>
+  }
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+                <section>
+                  <h5>Response Example
+                    <span>(403 Forbidden)</span>
+                  </h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;message&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;success&quot;</span>: <span class="hljs-string">&quot;boolean&quot;</span>
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <h1 id="tag-Device-Module" class="swagger-summary-tag" data-traverse-target="tag-Device-Module">Device Module</h1>
+          <div class="tag-description doc-row">
+            <div class="doc-copy">
+              <p>The device module liases with devices configured for the given service and the current status such as battery life and communications.</p>
+            </div>
+          </div>
+          <div id="operation--device--deviceId--ping-get" class="operation panel" data-traverse-target="operation--device--deviceId--ping-get">
+            <!-- <section class="operation-tags row"> -->
+            <!-- <div class="doc-copy"> -->
+            <div class="operation-tags">
+              <a class="label" href="#tag-Device-Module">Device Module</a>
+              <!---->
+            </div>
+            <!-- </div> -->
+            <!-- </section> -->
+            <h2 class="operation-title">
+              <span class="operation-summary">Device Ping</span>
+            </h2>
+            <div class="doc-row content-types">
+              <div class="doc-copy"> </div>
+              <div class="doc-examples"> </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-operation-path">
+                  <span class="operation-method">GET</span>
+                  <span class="operation-path">/device/{deviceId}/ping</span>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-operation-description">
+                  <p>To monitor or to check whether a device is available, the host can send a simple <code>GET</code> request to the URL at <code>/device/{deviceId}/ping</code> to see if the device is responding and available.</p>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-request-params">
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">deviceId</div>
+                      <span class="json-property-required"></span>
+                    </div>
+                    <div class="prop-value">
+                      <p>The name of the target device used by the API.</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-inner">
+                    <div class="prop-name param-label">type</div>
+                    <div class="prop-value">
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-inner">
+                    <div class="prop-name param-label">in</div>
+                    <div class="prop-value">path</div>
+                  </div>
+                </section>
+              </div>
+              <div class="doc-examples"></div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-responses">
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">200 OK</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/Result">Result</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Response of a ping request</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">403 Forbidden</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/Result">Result</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Unauthorized to access the device</p>
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <h5>Response Content-Types:
+                  <span>application/json</span>
+                </h5>
+                <section>
+                  <h5>Response Example
+                    <span>(200 OK)</span>
+                  </h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;message&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;success&quot;</span>: <span class="hljs-string">&quot;boolean&quot;</span>
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+                <section>
+                  <h5>Response Example
+                    <span>(403 Forbidden)</span>
+                  </h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;message&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;success&quot;</span>: <span class="hljs-string">&quot;boolean&quot;</span>
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="operation--device--deviceId--info-get" class="operation panel" data-traverse-target="operation--device--deviceId--info-get">
+            <!-- <section class="operation-tags row"> -->
+            <!-- <div class="doc-copy"> -->
+            <div class="operation-tags">
+              <a class="label" href="#tag-Device-Module">Device Module</a>
+              <!---->
+            </div>
+            <!-- </div> -->
+            <!-- </section> -->
+            <h2 class="operation-title">
+              <span class="operation-summary">Device Information</span>
+            </h2>
+            <div class="doc-row content-types">
+              <div class="doc-copy"> </div>
+              <div class="doc-examples"> </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-operation-path">
+                  <span class="operation-method">GET</span>
+                  <span class="operation-path">/device/{deviceId}/info</span>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-operation-description">
+                  <p>Obtains information regarding the device and to review the current status of a device such as the battery charge, serial number and device type.</p>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-request-params">
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">deviceId</div>
+                      <span class="json-property-required"></span>
+                    </div>
+                    <div class="prop-value">
+                      <p>The name of the target device used by the API.</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-inner">
+                    <div class="prop-name param-label">type</div>
+                    <div class="prop-value">
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-inner">
+                    <div class="prop-name param-label">in</div>
+                    <div class="prop-value">path</div>
+                  </div>
+                </section>
+              </div>
+              <div class="doc-examples"></div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-responses">
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">200 OK</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/DeviceInfo">DeviceInfo</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Information on the given device</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">403 Forbidden</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/Result">Result</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Unauthorized to access the device</p>
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <h5>Response Content-Types:
+                  <span>application/json</span>
+                </h5>
+                <section>
+                  <h5>Response Example
+                    <span>(200 OK)</span>
+                  </h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;name&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;serialno&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;portable&quot;</span>: <span class="hljs-string">&quot;boolean&quot;</span>,
+  <span class="hljs-attr">&quot;busy&quot;</span>: <span class="hljs-string">&quot;boolean&quot;</span>,
+  <span class="hljs-attr">&quot;battery_charging&quot;</span>: <span class="hljs-string">&quot;boolean&quot;</span>,
+  <span class="hljs-attr">&quot;battery_percentage&quot;</span>: <span class="hljs-string">&quot;integer&quot;</span>,
+  <span class="hljs-attr">&quot;printer&quot;</span>: <span class="hljs-string">&quot;boolean&quot;</span>
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+                <section>
+                  <h5>Response Example
+                    <span>(403 Forbidden)</span>
+                  </h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;message&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;success&quot;</span>: <span class="hljs-string">&quot;boolean&quot;</span>
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <h1>Schema Definitions</h1>
+          <div id="definition-SuccessResponse" class="definition panel" data-traverse-target="definition-SuccessResponse">
+            <h2 class="panel-title">
+              <a name="/definitions/SuccessResponse"></a>SuccessResponse:
+              <span class="json-property-type">
+                <span class="json-property-type">object</span>
+                <span class="json-property-range" title="Value limits"></span>
+              </span>
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="json-schema-properties">
+                  <dl>
+                    <dt data-property-name="success">
+                      <span class="json-property-name">success:</span>
+                      <span class="json-property-type">boolean</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                      <span class="json-property-required"></span>
+                    </dt>
+                    <dt data-property-name="description">
+                      <span class="json-property-name">description:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>Message describing any error</p>
+                    </dd>
+                    <dt data-property-name="status">
+                      <span class="json-property-name">status:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>status of the device</p>
+                    </dd>
+                  </dl>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Example</h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;success&quot;</span>: <span class="hljs-literal">false</span>,
+  <span class="hljs-attr">&quot;description&quot;</span>: <span class="hljs-string">&quot;Transaction in progress&quot;</span>,
+  <span class="hljs-attr">&quot;status&quot;</span>: <span class="hljs-string">&quot;Prompting for payment&quot;</span>
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="definition-PrintRequest" class="definition panel" data-traverse-target="definition-PrintRequest">
+            <h2 class="panel-title">
+              <a name="/definitions/PrintRequest"></a>PrintRequest:
+              <span class="json-property-type">
+                <span class="json-property-type">object</span>
+                <span class="json-property-range" title="Value limits"></span>
+              </span>
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="json-schema-properties">
+                  <dl>
+                    <dt data-property-name="identifier">
+                      <span class="json-property-name">identifier:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                      <span class="json-property-required"></span>
+                    </dt>
+                    <dd>
+                      <p>Must include an identifier for a transaction that has been carried out on the device</p>
+                    </dd>
+                    <dt data-property-name="type">
+                      <span class="json-property-name">type:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>The instruction prints the cardholder copy of the receipt by default. If you want to reprint the merchant copy, append “type”:”merchant” to the body of the request.</p>
+                    </dd>
+                  </dl>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Example</h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;identifier&quot;</span>: <span class="hljs-string">&quot;Tx12345&quot;</span>,
+  <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="definition-TransactionProgress" class="definition panel" data-traverse-target="definition-TransactionProgress">
+            <h2 class="panel-title">
+              <a name="/definitions/TransactionProgress"></a>TransactionProgress:
+              <span class="json-property-type">
+                <span class="json-property-type">object</span>
+                <span class="json-property-range" title="Value limits"></span>
+              </span>
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="json-schema-properties">
+                  <dl>
+                    <dt data-property-name="identifier">
+                      <span class="json-property-name">identifier:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                      <span class="json-property-required"></span>
+                    </dt>
+                    <dd>
+                      <p>The identifier used to instigate the transaction</p>
+                    </dd>
+                  </dl>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Example</h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;identifier&quot;</span>: <span class="hljs-string">&quot;Tx12345&quot;</span>
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="definition-TransactionResult" class="definition panel" data-traverse-target="definition-TransactionResult">
+            <h2 class="panel-title">
+              <a name="/definitions/TransactionResult"></a>TransactionResult:
+              <span class="json-property-type">
+                <span class="json-property-type">object</span>
+                <span class="json-property-range" title="Value limits"></span>
+              </span>
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="json-schema-properties">
+                  <dl>
+                    <dt data-property-name="status">
+                      <span class="json-property-name">status:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>A description of the status of a transaction</p>
+                    </dd>
+                    <dt data-property-name="identifier">
+                      <span class="json-property-name">identifier:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>The indentifier uniquely identifying the transaction</p>
+                    </dd>
+                    <dt data-property-name="is_complete">
+                      <span class="json-property-name">is_complete:</span>
+                      <span class="json-property-type">boolean</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>A boolean value stating whether the transaction has completed. The value will be false if the transaction is in progress. Should the value be true, a property containing the transaction details is made available.</p>
+                    </dd>
+                    <dt data-property-name="data">
+                      <span class="json-property-name">data:</span>
+                      <span class="json-property-type">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/TransactionData">TransactionData</a>
+                        </span>
+                      </span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                  </dl>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Example</h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;status&quot;</span>: <span class="hljs-string">&quot;EMV: Starting transaction&quot;</span>,
+  <span class="hljs-attr">&quot;identifier&quot;</span>: <span class="hljs-string">&quot;Tx12345&quot;</span>,
+  <span class="hljs-attr">&quot;is_complete&quot;</span>: <span class="hljs-string">&quot;boolean&quot;</span>,
+  <span class="hljs-attr">&quot;data&quot;</span>: {
+    <span class="hljs-attr">&quot;additional_data&quot;</span>: <span class="hljs-string">&quot;000800&quot;</span>,
+    <span class="hljs-attr">&quot;auxiliary_data&quot;</span>: <span class="hljs-string">&quot;CEAB962F&quot;</span>,
+    <span class="hljs-attr">&quot;card_type&quot;</span>: <span class="hljs-string">&quot;EMV&quot;</span>,
+    <span class="hljs-attr">&quot;completed_at&quot;</span>: <span class="hljs-string">&quot;2017-11-01T08:54:23&quot;</span>,
+    <span class="hljs-attr">&quot;created_at&quot;</span>: <span class="hljs-string">&quot;2017-11-01T08:54:09&quot;</span>,
+    <span class="hljs-attr">&quot;currency_symbol&quot;</span>: <span class="hljs-string">&quot;&#xA3;&quot;</span>,
+    <span class="hljs-attr">&quot;declined_by_card&quot;</span>: <span class="hljs-literal">false</span>,
+    <span class="hljs-attr">&quot;emv_app_cryptogram&quot;</span>: <span class="hljs-string">&quot;CDC35CA0090BC8&quot;</span>,
+    <span class="hljs-attr">&quot;emv_app_expiration_date&quot;</span>: <span class="hljs-string">&quot;1121&quot;</span>,
+    <span class="hljs-attr">&quot;emv_app_txn_counter&quot;</span>: <span class="hljs-number">5</span>,
+    <span class="hljs-attr">&quot;emv_authorized_amount&quot;</span>: <span class="hljs-number">100</span>,
+    <span class="hljs-attr">&quot;emv_cardholder_verification_results&quot;</span>: <span class="hljs-string">&quot;3F0000&quot;</span>,
+    <span class="hljs-attr">&quot;emv_country_code&quot;</span>: <span class="hljs-string">&quot;826&quot;</span>,
+    <span class="hljs-attr">&quot;emv_cryptogram_info_data&quot;</span>: <span class="hljs-string">&quot;80&quot;</span>,
+    <span class="hljs-attr">&quot;emv_icc_appid&quot;</span>: <span class="hljs-string">&quot;A0000000031010&quot;</span>,
+    <span class="hljs-attr">&quot;emv_interchange_profile&quot;</span>: <span class="hljs-string">&quot;+00&quot;</span>,
+    <span class="hljs-attr">&quot;emv_issuer_app_data&quot;</span>: <span class="hljs-string">&quot;06011103A00000&quot;</span>,
+    <span class="hljs-attr">&quot;emv_pan_seq_num&quot;</span>: <span class="hljs-string">&quot;01&quot;</span>,
+    <span class="hljs-attr">&quot;emv_terminal_capabilities&quot;</span>: <span class="hljs-string">&quot;E0B0C8&quot;</span>,
+    <span class="hljs-attr">&quot;emv_terminal_type&quot;</span>: <span class="hljs-string">&quot;22&quot;</span>,
+    <span class="hljs-attr">&quot;emv_terminal_verification_results&quot;</span>: <span class="hljs-string">&quot;0000000000&quot;</span>,
+    <span class="hljs-attr">&quot;emv_track2_equivalent&quot;</span>: <span class="hljs-string">&quot;4***********0010&quot;</span>,
+    <span class="hljs-attr">&quot;emv_txn_currency_code&quot;</span>: <span class="hljs-string">&quot;840&quot;</span>,
+    <span class="hljs-attr">&quot;emv_txn_date&quot;</span>: <span class="hljs-string">&quot;2017-11-01&quot;</span>,
+    <span class="hljs-attr">&quot;emv_txn_status_info&quot;</span>: <span class="hljs-string">&quot;0000&quot;</span>,
+    <span class="hljs-attr">&quot;emv_txn_type&quot;</span>: <span class="hljs-string">&quot;00&quot;</span>,
+    <span class="hljs-attr">&quot;emv_txn_unpredictable_number&quot;</span>: <span class="hljs-string">&quot;FF10616&quot;</span>,
+    <span class="hljs-attr">&quot;is_commercial_card&quot;</span>: <span class="hljs-literal">false</span>,
+    <span class="hljs-attr">&quot;is_contactless&quot;</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">&quot;is_fallback&quot;</span>: <span class="hljs-literal">false</span>,
+    <span class="hljs-attr">&quot;is_offline&quot;</span>: <span class="hljs-literal">false</span>,
+    <span class="hljs-attr">&quot;is_voided&quot;</span>: <span class="hljs-literal">false</span>,
+    <span class="hljs-attr">&quot;response_code&quot;</span>: <span class="hljs-string">&quot;00&quot;</span>,
+    <span class="hljs-attr">&quot;response_text&quot;</span>: <span class="hljs-string">&quot;AUTH CODE 604405&quot;</span>,
+    <span class="hljs-attr">&quot;result&quot;</span>: <span class="hljs-string">&quot;approved&quot;</span>,
+    <span class="hljs-attr">&quot;scheme&quot;</span>: <span class="hljs-string">&quot;visa-qvsdc&quot;</span>,
+    <span class="hljs-attr">&quot;signature_required&quot;</span>: <span class="hljs-literal">false</span>,
+    <span class="hljs-attr">&quot;terminal_id&quot;</span>: <span class="hljs-string">&quot;33420006&quot;</span>,
+    <span class="hljs-attr">&quot;total_amount&quot;</span>: <span class="hljs-number">100</span>,
+    <span class="hljs-attr">&quot;transaction_type&quot;</span>: <span class="hljs-string">&quot;sale&quot;</span>,
+    <span class="hljs-attr">&quot;verified_by_pin&quot;</span>: <span class="hljs-literal">false</span>
+  }
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="definition-Receipt" class="definition panel" data-traverse-target="definition-Receipt">
+            <h2 class="panel-title">
+              <a name="/definitions/Receipt"></a>Receipt:
+              <span class="json-property-type">
+                <span class="json-property-type">object</span>
+                <span class="json-property-range" title="Value limits"></span>
+              </span>
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="json-schema-properties">
+                  <dl>
+                    <dt data-property-name="customer">
+                      <span class="json-property-name">customer:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>The customer receipt to be printed or stored</p>
+                    </dd>
+                  </dl>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Example</h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;customer&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="definition-TransactionData" class="definition panel" data-traverse-target="definition-TransactionData">
+            <h2 class="panel-title">
+              <a name="/definitions/TransactionData"></a>TransactionData:
+              <span class="json-property-type">
+                <span class="json-property-type">object</span>
+                <span class="json-property-range" title="Value limits"></span>
+              </span>
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="json-schema-properties">
+                  <dl>
+                    <dt data-property-name="additional_data">
+                      <span class="json-property-name">additional_data:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>additional data provided within the acquirer response</p>
+                    </dd>
+                    <dt data-property-name="auxiliary_data">
+                      <span class="json-property-name">auxiliary_data:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>Value provided by online processing</p>
+                    </dd>
+                    <dt data-property-name="card_type">
+                      <span class="json-property-name">card_type:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>The type of card used such as EMV</p>
+                    </dd>
+                    <dt data-property-name="completed_at">
+                      <span class="json-property-name">completed_at:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>The date and time that the transaction was completed in ISO-8166 format</p>
+                    </dd>
+                    <dt data-property-name="created_at">
+                      <span class="json-property-name">created_at:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>The date and time that the transaction was created in ISO-8166 format</p>
+                    </dd>
+                    <dt data-property-name="currency_symbol">
+                      <span class="json-property-name">currency_symbol:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>The currency symbol used</p>
+                    </dd>
+                    <dt data-property-name="declined_by_card">
+                      <span class="json-property-name">declined_by_card:</span>
+                      <span class="json-property-type">boolean</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>Boolean value should the transaction be declined by the card</p>
+                    </dd>
+                    <dt data-property-name="emv_app_cryptogram">
+                      <span class="json-property-name">emv_app_cryptogram:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>Cryptogram used by the card in processing</p>
+                    </dd>
+                    <dt data-property-name="emv_app_expiration_date">
+                      <span class="json-property-name">emv_app_expiration_date:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>Expiry date of the card</p>
+                    </dd>
+                    <dt data-property-name="emv_app_txn_counter">
+                      <span class="json-property-name">emv_app_txn_counter:</span>
+                      <span class="json-property-type">integer</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>A transaction counter, incremented by the device resulting in a transaction number</p>
+                    </dd>
+                    <dt data-property-name="emv_authorized_amount">
+                      <span class="json-property-name">emv_authorized_amount:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>The amount authorised</p>
+                    </dd>
+                    <dt data-property-name="emv_cardholder_verification_results">
+                      <span class="json-property-name">emv_cardholder_verification_results:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>Verification results within the processing scope</p>
+                    </dd>
+                    <dt data-property-name="emv_country_code">
+                      <span class="json-property-name">emv_country_code:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>A country code returned by the device</p>
+                    </dd>
+                    <dt data-property-name="emv_cryptogram_info_data">
+                      <span class="json-property-name">emv_cryptogram_info_data:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>Cryptogram info returned by the card</p>
+                    </dd>
+                    <dt data-property-name="emv_icc_appid">
+                      <span class="json-property-name">emv_icc_appid:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>The application id (AID) identifying the card used</p>
+                    </dd>
+                    <dt data-property-name="emv_interchange_profile">
+                      <span class="json-property-name">emv_interchange_profile:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>The interchange profile used</p>
+                    </dd>
+                    <dt data-property-name="emv_issuer_app_data">
+                      <span class="json-property-name">emv_issuer_app_data:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>Application data provided by the issuer</p>
+                    </dd>
+                    <dt data-property-name="emv_pan_seq_num">
+                      <span class="json-property-name">emv_pan_seq_num:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>Sequence number provided by the card</p>
+                    </dd>
+                    <dt data-property-name="emv_terminal_capabilities">
+                      <span class="json-property-name">emv_terminal_capabilities:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>Terminal capabilities of the device</p>
+                    </dd>
+                    <dt data-property-name="emv_terminal_type">
+                      <span class="json-property-name">emv_terminal_type:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>The terminal type of the device</p>
+                    </dd>
+                    <dt data-property-name="emv_terminal_verification_results">
+                      <span class="json-property-name">emv_terminal_verification_results:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>TVR provided by the verification process of the transaction</p>
+                    </dd>
+                    <dt data-property-name="emv_track2_equivalent">
+                      <span class="json-property-name">emv_track2_equivalent:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>A masked version of the card number</p>
+                    </dd>
+                    <dt data-property-name="emv_txn_currency_code">
+                      <span class="json-property-name">emv_txn_currency_code:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>ISO currency code of the transaction</p>
+                    </dd>
+                    <dt data-property-name="emv_txn_date">
+                      <span class="json-property-name">emv_txn_date:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>ISO date of the transaction</p>
+                    </dd>
+                    <dt data-property-name="emv_txn_status_info">
+                      <span class="json-property-name">emv_txn_status_info:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>Status info of the transaction</p>
+                    </dd>
+                    <dt data-property-name="emv_txn_type">
+                      <span class="json-property-name">emv_txn_type:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>Transacrtion type information returned</p>
+                    </dd>
+                    <dt data-property-name="emv_txn_unpredictable_number">
+                      <span class="json-property-name">emv_txn_unpredictable_number:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>The UN or unpredicatble number in the transaction process</p>
+                    </dd>
+                    <dt data-property-name="is_commercial_card">
+                      <span class="json-property-name">is_commercial_card:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>Determines if the card was a commercial card</p>
+                    </dd>
+                    <dt data-property-name="is_contactless">
+                      <span class="json-property-name">is_contactless:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>Determines if the card was contactless</p>
+                    </dd>
+                    <dt data-property-name="is_fallback">
+                      <span class="json-property-name">is_fallback:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>Determines if fallback was used</p>
+                    </dd>
+                    <dt data-property-name="is_offline">
+                      <span class="json-property-name">is_offline:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>Determines if the transaction was authorised offline</p>
+                    </dd>
+                    <dt data-property-name="is_voided">
+                      <span class="json-property-name">is_voided:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>Determines if the transaction was voided</p>
+                    </dd>
+                    <dt data-property-name="response_code">
+                      <span class="json-property-name">response_code:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>A response code provided by the acquirer</p>
+                    </dd>
+                    <dt data-property-name="response_text">
+                      <span class="json-property-name">response_text:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>The response text returned by the acquirer</p>
+                    </dd>
+                    <dt data-property-name="result">
+                      <span class="json-property-name">result:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>A text result of the transaction</p>
+                    </dd>
+                    <dt data-property-name="scheme">
+                      <span class="json-property-name">scheme:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>A description of the card scheme for the card</p>
+                    </dd>
+                    <dt data-property-name="signature_required">
+                      <span class="json-property-name">signature_required:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>Determines whether a signature was required for legacy systems</p>
+                    </dd>
+                    <dt data-property-name="terminal_id">
+                      <span class="json-property-name">terminal_id:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>The terminal id used from the device</p>
+                    </dd>
+                    <dt data-property-name="total_amount">
+                      <span class="json-property-name">total_amount:</span>
+                      <span class="json-property-type">integer</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>The total amount processed</p>
+                    </dd>
+                    <dt data-property-name="transaction_type">
+                      <span class="json-property-name">transaction_type:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>The type of transaction processed</p>
+                    </dd>
+                    <dt data-property-name="verified_by_pin">
+                      <span class="json-property-name">verified_by_pin:</span>
+                      <span class="json-property-type">boolean</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>Determines if the transaction was verified by pin entry</p>
+                    </dd>
+                  </dl>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Example</h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;additional_data&quot;</span>: <span class="hljs-string">&quot;000800&quot;</span>,
+  <span class="hljs-attr">&quot;auxiliary_data&quot;</span>: <span class="hljs-string">&quot;CEAB962F&quot;</span>,
+  <span class="hljs-attr">&quot;card_type&quot;</span>: <span class="hljs-string">&quot;EMV&quot;</span>,
+  <span class="hljs-attr">&quot;completed_at&quot;</span>: <span class="hljs-string">&quot;2017-11-01T08:54:23&quot;</span>,
+  <span class="hljs-attr">&quot;created_at&quot;</span>: <span class="hljs-string">&quot;2017-11-01T08:54:09&quot;</span>,
+  <span class="hljs-attr">&quot;currency_symbol&quot;</span>: <span class="hljs-string">&quot;&#xA3;&quot;</span>,
+  <span class="hljs-attr">&quot;declined_by_card&quot;</span>: <span class="hljs-literal">false</span>,
+  <span class="hljs-attr">&quot;emv_app_cryptogram&quot;</span>: <span class="hljs-string">&quot;CDC35CA0090BC8&quot;</span>,
+  <span class="hljs-attr">&quot;emv_app_expiration_date&quot;</span>: <span class="hljs-string">&quot;1121&quot;</span>,
+  <span class="hljs-attr">&quot;emv_app_txn_counter&quot;</span>: <span class="hljs-number">5</span>,
+  <span class="hljs-attr">&quot;emv_authorized_amount&quot;</span>: <span class="hljs-number">100</span>,
+  <span class="hljs-attr">&quot;emv_cardholder_verification_results&quot;</span>: <span class="hljs-string">&quot;3F0000&quot;</span>,
+  <span class="hljs-attr">&quot;emv_country_code&quot;</span>: <span class="hljs-string">&quot;826&quot;</span>,
+  <span class="hljs-attr">&quot;emv_cryptogram_info_data&quot;</span>: <span class="hljs-string">&quot;80&quot;</span>,
+  <span class="hljs-attr">&quot;emv_icc_appid&quot;</span>: <span class="hljs-string">&quot;A0000000031010&quot;</span>,
+  <span class="hljs-attr">&quot;emv_interchange_profile&quot;</span>: <span class="hljs-string">&quot;+00&quot;</span>,
+  <span class="hljs-attr">&quot;emv_issuer_app_data&quot;</span>: <span class="hljs-string">&quot;06011103A00000&quot;</span>,
+  <span class="hljs-attr">&quot;emv_pan_seq_num&quot;</span>: <span class="hljs-string">&quot;01&quot;</span>,
+  <span class="hljs-attr">&quot;emv_terminal_capabilities&quot;</span>: <span class="hljs-string">&quot;E0B0C8&quot;</span>,
+  <span class="hljs-attr">&quot;emv_terminal_type&quot;</span>: <span class="hljs-string">&quot;22&quot;</span>,
+  <span class="hljs-attr">&quot;emv_terminal_verification_results&quot;</span>: <span class="hljs-string">&quot;0000000000&quot;</span>,
+  <span class="hljs-attr">&quot;emv_track2_equivalent&quot;</span>: <span class="hljs-string">&quot;4***********0010&quot;</span>,
+  <span class="hljs-attr">&quot;emv_txn_currency_code&quot;</span>: <span class="hljs-string">&quot;840&quot;</span>,
+  <span class="hljs-attr">&quot;emv_txn_date&quot;</span>: <span class="hljs-string">&quot;2017-11-01&quot;</span>,
+  <span class="hljs-attr">&quot;emv_txn_status_info&quot;</span>: <span class="hljs-string">&quot;0000&quot;</span>,
+  <span class="hljs-attr">&quot;emv_txn_type&quot;</span>: <span class="hljs-string">&quot;00&quot;</span>,
+  <span class="hljs-attr">&quot;emv_txn_unpredictable_number&quot;</span>: <span class="hljs-string">&quot;FF10616&quot;</span>,
+  <span class="hljs-attr">&quot;is_commercial_card&quot;</span>: <span class="hljs-literal">false</span>,
+  <span class="hljs-attr">&quot;is_contactless&quot;</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">&quot;is_fallback&quot;</span>: <span class="hljs-literal">false</span>,
+  <span class="hljs-attr">&quot;is_offline&quot;</span>: <span class="hljs-literal">false</span>,
+  <span class="hljs-attr">&quot;is_voided&quot;</span>: <span class="hljs-literal">false</span>,
+  <span class="hljs-attr">&quot;response_code&quot;</span>: <span class="hljs-string">&quot;00&quot;</span>,
+  <span class="hljs-attr">&quot;response_text&quot;</span>: <span class="hljs-string">&quot;AUTH CODE 604405&quot;</span>,
+  <span class="hljs-attr">&quot;result&quot;</span>: <span class="hljs-string">&quot;approved&quot;</span>,
+  <span class="hljs-attr">&quot;scheme&quot;</span>: <span class="hljs-string">&quot;visa-qvsdc&quot;</span>,
+  <span class="hljs-attr">&quot;signature_required&quot;</span>: <span class="hljs-literal">false</span>,
+  <span class="hljs-attr">&quot;terminal_id&quot;</span>: <span class="hljs-string">&quot;33420006&quot;</span>,
+  <span class="hljs-attr">&quot;total_amount&quot;</span>: <span class="hljs-number">100</span>,
+  <span class="hljs-attr">&quot;transaction_type&quot;</span>: <span class="hljs-string">&quot;sale&quot;</span>,
+  <span class="hljs-attr">&quot;verified_by_pin&quot;</span>: <span class="hljs-literal">false</span>
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="definition-DeviceInfo" class="definition panel" data-traverse-target="definition-DeviceInfo">
+            <h2 class="panel-title">
+              <a name="/definitions/DeviceInfo"></a>DeviceInfo:
+              <span class="json-property-type">
+                <span class="json-property-type">object</span>
+                <span class="json-property-range" title="Value limits"></span>
+              </span>
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="json-schema-properties">
+                  <dl>
+                    <dt data-property-name="name">
+                      <span class="json-property-name">name:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>The name of the device</p>
+                    </dd>
+                    <dt data-property-name="serialno">
+                      <span class="json-property-name">serialno:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>The serial number of the device</p>
+                    </dd>
+                    <dt data-property-name="portable">
+                      <span class="json-property-name">portable:</span>
+                      <span class="json-property-type">boolean</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>Whether the device is portable</p>
+                    </dd>
+                    <dt data-property-name="busy">
+                      <span class="json-property-name">busy:</span>
+                      <span class="json-property-type">boolean</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>Whether the device is busy or available for a transaction</p>
+                    </dd>
+                    <dt data-property-name="battery_charging">
+                      <span class="json-property-name">battery_charging:</span>
+                      <span class="json-property-type">boolean</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>Whether the device is currently charging</p>
+                    </dd>
+                    <dt data-property-name="battery_percentage">
+                      <span class="json-property-name">battery_percentage:</span>
+                      <span class="json-property-type">integer</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>A percentage value of the battery</p>
+                    </dd>
+                    <dt data-property-name="printer">
+                      <span class="json-property-name">printer:</span>
+                      <span class="json-property-type">boolean</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>Whether the device has a printer</p>
+                    </dd>
+                  </dl>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Example</h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;name&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;serialno&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;portable&quot;</span>: <span class="hljs-string">&quot;boolean&quot;</span>,
+  <span class="hljs-attr">&quot;busy&quot;</span>: <span class="hljs-string">&quot;boolean&quot;</span>,
+  <span class="hljs-attr">&quot;battery_charging&quot;</span>: <span class="hljs-string">&quot;boolean&quot;</span>,
+  <span class="hljs-attr">&quot;battery_percentage&quot;</span>: <span class="hljs-string">&quot;integer&quot;</span>,
+  <span class="hljs-attr">&quot;printer&quot;</span>: <span class="hljs-string">&quot;boolean&quot;</span>
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="definition-Result" class="definition panel" data-traverse-target="definition-Result">
+            <h2 class="panel-title">
+              <a name="/definitions/Result"></a>Result:
+              <span class="json-property-type">
+                <span class="json-property-type">object</span>
+                <span class="json-property-range" title="Value limits"></span>
+              </span>
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="json-schema-properties">
+                  <dl>
+                    <dt data-property-name="message">
+                      <span class="json-property-name">message:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                      <span class="json-property-required"></span>
+                    </dt>
+                    <dd>
+                      <p>A message related to the request. If the action was successful the message will contain information that may be disaplyed back to the end user or if the action success is false, the message will contain an error message explaining the error. The message will not convey sensitive information.</p>
+                    </dd>
+                    <dt data-property-name="success">
+                      <span class="json-property-name">success:</span>
+                      <span class="json-property-type">boolean</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                      <span class="json-property-required"></span>
+                    </dt>
+                    <dd>
+                      <p>A boolean result of the action requested</p>
+                    </dd>
+                  </dl>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Example</h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;message&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;success&quot;</span>: <span class="hljs-string">&quot;boolean&quot;</span>
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="definition-SaleRequest" class="definition panel" data-traverse-target="definition-SaleRequest">
+            <h2 class="panel-title">
+              <a name="/definitions/SaleRequest"></a>SaleRequest:
+              <span class="json-property-type">
+                <span class="json-property-type">object</span>
+                <span class="json-property-range" title="Value limits"></span>
+              </span>
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="json-schema-description">
+                  <p>A request for a sale</p>
+                </section>
+                <section class="json-schema-properties">
+                  <dl>
+                    <dt data-property-name="device">
+                      <span class="json-property-name">device:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                      <span class="json-property-required"></span>
+                    </dt>
+                    <dd>
+                      <p>The name of the target device used by the API. The device will be setup prior to the sale but allows targeting of multiple devices.</p>
+                    </dd>
+                    <dt data-property-name="amount">
+                      <span class="json-property-name">amount:</span>
+                      <span class="json-property-type">integer</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                      <span class="json-property-required"></span>
+                    </dt>
+                    <dd>
+                      <p>The amount to process in the lowest denomination and in the base currency of the device. 4798 for instance would process the transaction for £47.98</p>
+                    </dd>
+                    <dt data-property-name="identifier">
+                      <span class="json-property-name">identifier:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                      <span class="json-property-required"></span>
+                    </dt>
+                    <dd>
+                      <p>An identifier or reference for the sale as taken by the point of sale system. This should be used to cross reference transactions after it has processed. The value should be unique and will be used to check on the processing of the transaction.</p>
+                    </dd>
+                  </dl>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Example</h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;device&quot;</span>: <span class="hljs-string">&quot;TID001&quot;</span>,
+  <span class="hljs-attr">&quot;amount&quot;</span>: <span class="hljs-number">4798</span>,
+  <span class="hljs-attr">&quot;identifier&quot;</span>: <span class="hljs-string">&quot;Tx12345&quot;</span>
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="definition-ReversalRequest" class="definition panel" data-traverse-target="definition-ReversalRequest">
+            <h2 class="panel-title">
+              <a name="/definitions/ReversalRequest"></a>ReversalRequest:
+              <span class="json-property-type">
+                <span class="json-property-type">object</span>
+                <span class="json-property-range" title="Value limits"></span>
+              </span>
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="json-schema-properties">
+                  <dl>
+                    <dt data-property-name="identifier">
+                      <span class="json-property-name">identifier:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                      <span class="json-property-required"></span>
+                    </dt>
+                    <dd>
+                      <p>The identifier of a transaction to reverse</p>
+                    </dd>
+                  </dl>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Example</h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;identifier&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="definition-SaleResponse" class="definition panel" data-traverse-target="definition-SaleResponse">
+            <h2 class="panel-title">
+              <a name="/definitions/SaleResponse"></a>SaleResponse:
+              <span class="json-property-type">
+                <span class="json-property-type">object</span>
+                <span class="json-property-range" title="Value limits"></span>
+              </span>
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="json-schema-properties">
+                  <dl>
+                    <dt data-property-name="success">
+                      <span class="json-property-name">success:</span>
+                      <span class="json-property-type">boolean</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                      <span class="json-property-required"></span>
+                    </dt>
+                    <dd>
+                      <p>Defines whether the sale was successfully created</p>
+                    </dd>
+                    <dt data-property-name="identifier">
+                      <span class="json-property-name">identifier:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                      <span class="json-property-required"></span>
+                    </dt>
+                    <dd>
+                      <p>The identifier presented to the sale request</p>
+                    </dd>
+                    <dt data-property-name="description">
+                      <span class="json-property-name">description:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>Description should the sale request not be accepted</p>
+                    </dd>
+                  </dl>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Example</h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;success&quot;</span>: <span class="hljs-string">&quot;boolean&quot;</span>,
+  <span class="hljs-attr">&quot;identifier&quot;</span>: <span class="hljs-string">&quot;Tx12345&quot;</span>,
+  <span class="hljs-attr">&quot;description&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <div class="doc-row no-margin">
+            <div class="doc-copy doc-separator">
+              <a class="powered-by" href="https://sourcey.com/spectacle">Documentation by
+                <span>Spectacle</span>
+              </a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </body>
+</html>

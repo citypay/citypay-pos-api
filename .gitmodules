@@ -1,3 +1,0 @@
-[submodule "citypay-pos-android-client/citypay-pos-android-client"]
-	path = citypay-pos-android-client/citypay-pos-android-client
-	url = https://github.com/citypay/citypay-pos-api
