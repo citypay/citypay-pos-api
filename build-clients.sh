@@ -1,17 +1,55 @@
 #!/bin/bash
 
-maven_cache_repo="${HOME}/.m2/repository"
 api=src/api/api.yaml
+APPDIR=${PWD}
+targets=( "android" )
+VERSION=$(grep 'version:' src/api/api.yaml | awk -F'"' '$0=$2')
 
-# droid
-docker container run --rm -v ${PWD}:/local swaggerapi/swagger-codegen-cli generate \
-    --input-spec /local/${api} \
-    --config /local/src/config/api-android-config.json \
-    --output /local/citypay-pos-android-client \
-    --lang android
+cat ${PWD}/.header
+echo "                                       C1tyPAy ${VERSION}
 
-#docker container run --rm -v ${PWD}:/local swaggerapi/swagger-codegen-cli generate \
-#    --input-spec /local/${api} \
-#    --config /local/src/config/api-php-config.json \
-#    --output /local/citypay-pos-php-client \
+"
+
+for i in "${targets[@]}"
+do
+
+    APP=citypay-pos-${i}-client
+    DIRECTORY=${PWD}/${APP}
+    GITHUB=https://github.com/citypay/${APP}
+
+    echo "Creating ${i} client, repo: ${GITHUB}"
+
+    # if the directory does not exist, clone from github
+    if [ ! -d "$APP" ];
+    then
+        git clone -v ${GITHUB} ${APP} || echo "No remote repository found at ${GITHUB}"
+    else
+        # pull the latest from github
+        cd ${DIRECTORY}
+        git fetch origin
+        git pull origin
+
+    fi
+
+    echo "Generating ${i} client in ${APPDIR}"
+    cd ${APPDIR}
+    # --entrypoint /bin/ash -it
+    docker container run --rm -v ${APPDIR}:/local swaggerapi/swagger-codegen-cli generate \
+     --input-spec /local/${api} \
+     --config /local/src/config/api-${i}-config.json \
+     --output /local/citypay-pos-${i}-client \
+     --lang ${i}
+
+    git status
+
+done
+
+ # droid
+
+
+
+ #docker container run --rm -v ${PWD}:/local swaggerapi/swagger-codegen-cli generate \
+ #    --input-spec /local/${api} \
+ #    --config /local/src/config/api-php-config.json \
+ #    --output /local/citypay-pos-php-client \
 #    --lang php
