@@ -1,0 +1,50 @@
+
+# TransactionData
+
+## Properties
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**additionalData** | **String** | additional data provided within the acquirer response |  [optional]
+**auxiliaryData** | **String** | Value provided by online processing |  [optional]
+**cardType** | **String** | The type of card used such as EMV |  [optional]
+**completedAt** | **String** | The date and time that the transaction was completed in ISO-8166 format |  [optional]
+**createdAt** | **String** | The date and time that the transaction was created in ISO-8166 format |  [optional]
+**currencySymbol** | **String** | The currency symbol used |  [optional]
+**declinedByCard** | **Boolean** | Boolean value should the transaction be declined by the card |  [optional]
+**emvAppCryptogram** | **String** | Cryptogram used by the card in processing |  [optional]
+**emvAppExpirationDate** | **String** | Expiry date of the card |  [optional]
+**emvAppTxnCounter** | **Integer** | A transaction counter, incremented by the device resulting in a transaction number |  [optional]
+**emvAuthorizedAmount** | **String** | The amount authorised |  [optional]
+**emvCardholderVerificationResults** | **String** | Verification results within the processing scope |  [optional]
+**emvCountryCode** | **String** | A country code returned by the device |  [optional]
+**emvCryptogramInfoData** | **String** | Cryptogram info returned by the card |  [optional]
+**emvIccAppid** | **String** | The application id (AID) identifying the card used |  [optional]
+**emvInterchangeProfile** | **String** | The interchange profile used |  [optional]
+**emvIssuerAppData** | **String** | Application data provided by the issuer |  [optional]
+**emvPanSeqNum** | **String** | Sequence number provided by the card |  [optional]
+**emvTerminalCapabilities** | **String** | Terminal capabilities of the device |  [optional]
+**emvTerminalType** | **String** | The terminal type of the device |  [optional]
+**emvTerminalVerificationResults** | **String** | TVR provided by the verification process of the transaction |  [optional]
+**emvTrack2Equivalent** | **String** | A masked version of the card number |  [optional]
+**emvTxnCurrencyCode** | **String** | ISO currency code of the transaction |  [optional]
+**emvTxnDate** | **String** | ISO date of the transaction |  [optional]
+**emvTxnStatusInfo** | **String** | Status info of the transaction |  [optional]
+**emvTxnType** | **String** | Transacrtion type information returned |  [optional]
+**emvTxnUnpredictableNumber** | **String** | The UN or unpredicatble number in the transaction process |  [optional]
+**isCommercialCard** | **String** | Determines if the card was a commercial card |  [optional]
+**isContactless** | **String** | Determines if the card was contactless |  [optional]
+**isFallback** | **String** | Determines if fallback was used |  [optional]
+**isOffline** | **String** | Determines if the transaction was authorised offline |  [optional]
+**isVoided** | **String** | Determines if the transaction was voided |  [optional]
+**responseCode** | **String** | A response code provided by the acquirer |  [optional]
+**responseText** | **String** | The response text returned by the acquirer |  [optional]
+**result** | **String** | A text result of the transaction |  [optional]
+**scheme** | **String** | A description of the card scheme for the card |  [optional]
+**signatureRequired** | **String** | Determines whether a signature was required for legacy systems |  [optional]
+**terminalId** | **String** | The terminal id used from the device |  [optional]
+**totalAmount** | **Integer** | The total amount processed |  [optional]
+**transactionType** | **String** | The type of transaction processed |  [optional]
+**verifiedByPin** | **Boolean** | Determines if the transaction was verified by pin entry |  [optional]
+
+
+
