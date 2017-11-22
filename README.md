@@ -10,6 +10,15 @@ The API:
 - Defers the complexity and security of payment processes to a segregated device
 - Has devices already accredited with leading UK Acquiring Banks
 
+## Generated Clients
+
+We have provided a number of clients to use with the API available at
+
+- Android Client  https://github.com/citypay/citypay-pos-android-client 
+- Java Client https://github.com/citypay/citypay-pos-java-client 
+- Java PHP https://github.com/citypay/citypay-pos-php-client 
+
+
 ## API Overview
 
 The API is written using [Swagger](https://swagger.io) and can easily generate client code using the [Swagger Codegen](https://swagger.io/swagger-codegen/) 

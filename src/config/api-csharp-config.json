@@ -1,0 +1,11 @@
+{
+	"packageName": "CityPay.Pos",
+	"packageVersion": "1.0.0",
+	"sourceFolder": "src",
+	"packageGuid": "a8de5cd8-8af9-4786-a3cc-8725c07da9b9",
+	"interfacePrefix": "I",
+	"targetFramework": "v4.5",
+	"modelPropertyNaming": "PascalCase"
+}
+
+

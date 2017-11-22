@@ -1,0 +1,9 @@
+{
+	"projectName": "citypay-pos-api",
+	"sortParamsByRequiredFlag": true,
+	"ensureUniqueParams": true,
+	"packageName": "citypay",
+	"packageVersion": "1.0.0"
+}
+
+

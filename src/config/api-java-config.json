@@ -4,7 +4,15 @@
 	"modelPackage": "com.citypay.pos.model",
 	"apiPackage": "com.citypay.pos.api",
 	"groupId": "com.citypay.pos",
-	"artifactId": "citypay-pos-api-android"
+	"artifactId": "citypay-pos-api-java",
+	"artifactVersion": "1.0.0",
+	"developerName": "Gary Feltham",
+	"developerOrganization": "CityPay Limited",
+	"developerOrganizationUrl": "https://citypay.com",
+	"developerEmail": "gary.feltham@citypay.com",
+	"dateLibrary": "java8",
+	"java8": true,
+	"library": "okhttp-gson"
 }
 
 
