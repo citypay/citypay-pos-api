@@ -2,7 +2,7 @@
 
 api=src/api/api.yaml
 APPDIR=${PWD}
-targets=( "android" )
+targets=( "android" "php" "java" )
 VERSION=$(grep 'version:' src/api/api.yaml | awk -F'"' '$0=$2')
 
 cat ${PWD}/.header
@@ -14,15 +14,18 @@ for i in "${targets[@]}"
 do
 
     APP=citypay-pos-${i}-client
-    DIRECTORY=${PWD}/${APP}
+    DIRECTORY=${PWD}/clients/${APP}
     GITHUB=https://github.com/citypay/${APP}
 
+    echo ""
+    echo ""
+    echo "=============================================================================="
     echo "Creating ${i} client, repo: ${GITHUB}"
 
     # if the directory does not exist, clone from github
     if [ ! -d "$APP" ];
     then
-        git clone -v ${GITHUB} ${APP} || echo "No remote repository found at ${GITHUB}"
+        git clone -v ${GITHUB} ${DIRECTORY} || echo "No remote repository found at ${GITHUB}"
     else
         # pull the latest from github
         cd ${DIRECTORY}
@@ -37,19 +40,12 @@ do
     docker container run --rm -v ${APPDIR}:/local swaggerapi/swagger-codegen-cli generate \
      --input-spec /local/${api} \
      --config /local/src/config/api-${i}-config.json \
-     --output /local/citypay-pos-${i}-client \
+     --output /local/clients/citypay-pos-${i}-client \
      --lang ${i}
 
-    git status
+    cd ${DIRECTORY}
+
+
 
 done
 
- # droid
-
-
-
- #docker container run --rm -v ${PWD}:/local swaggerapi/swagger-codegen-cli generate \
- #    --input-spec /local/${api} \
- #    --config /local/src/config/api-php-config.json \
- #    --output /local/citypay-pos-php-client \
-#    --lang php

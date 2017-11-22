@@ -22,3 +22,31 @@ by modules within this project.
 API documentation can be created by running the `build-docs.sh` script. You will need a docker
 runtime to run the process. 
 
+
+Class | Method | HTTP request | Description
+------------ | ------------- | ------------- | -------------
+*DeviceModuleApi* | [**deviceInfo**](docs/md/DeviceModuleApi.md#deviceInfo) | **GET** /device/{deviceId}/info | Device Information
+*DeviceModuleApi* | [**ping**](docs/md/DeviceModuleApi.md#ping) | **GET** /device/{deviceId}/ping | Device Ping
+*PaymentModuleApi* | [**receipt**](docs/md/PaymentModuleApi.md#receipt) | **POST** /receipt | Receipt Print
+*PaymentModuleApi* | [**refund**](docs/md/PaymentModuleApi.md#refund) | **POST** /refund | Refund Transaction
+*PaymentModuleApi* | [**reversal**](docs/md/PaymentModuleApi.md#reversal) | **POST** /reversal | Reversal Tranasction
+*PaymentModuleApi* | [**sale**](docs/md/PaymentModuleApi.md#sale) | **POST** /sale | Sale Transaction
+*PaymentModuleApi* | [**transaction**](docs/md/PaymentModuleApi.md#transaction) | **POST** /transaction | Transaction Status
+
+
+## Documentation for Models
+
+ - [DeviceInfo](docs/md/DeviceInfo.md)
+ - [PrintRequest](docs/md/PrintRequest.md)
+ - [Receipt](docs/md/Receipt.md)
+ - [Result](docs/md/Result.md)
+ - [ReversalRequest](docs/md/ReversalRequest.md)
+ - [SaleRequest](docs/md/SaleRequest.md)
+ - [SaleResponse](docs/md/SaleResponse.md)
+ - [SuccessResponse](docs/md/SuccessResponse.md)
+ - [TransactionData](docs/md/TransactionData.md)
+ - [TransactionProgress](docs/md/TransactionProgress.md)
+ - [TransactionResult](docs/md/TransactionResult.md)
+
+
+

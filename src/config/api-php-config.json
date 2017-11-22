@@ -3,7 +3,7 @@
   "ensureUniqueParams": true,
   "modelPackage": "com.citypay.pos.model",
   "apiPackage": "com.citypay.pos.api",
-  "invokerPackage" : "CityPay\POS",
+  "invokerPackage" : "CityPay\\POS",
   "composerVendorName": "CityPay",
   "composerProjectName": "POS",
   "gitRepoId": "citypay-pos-php-client",

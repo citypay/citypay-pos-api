@@ -1,0 +1,10 @@
+{
+	"sortParamsByRequiredFlag": true,
+	"ensureUniqueParams": true,
+	"modelPackage": "com.citypay.pos.model",
+	"apiPackage": "com.citypay.pos.api",
+	"groupId": "com.citypay.pos",
+	"artifactId": "citypay-pos-api-android"
+}
+
+
