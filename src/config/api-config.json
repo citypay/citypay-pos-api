@@ -1,7 +1,0 @@
-{
-  "sortParamsByRequiredFlag": true,
-  "ensureUniqueParams": true,
-  "modelPropertyNaming": "camelCase",
-  "supportsES6": true,
-  "packageVersion": "${VERSION}"
-}
