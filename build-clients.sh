@@ -45,13 +45,13 @@ do
     echo "Generating ${i} client in ${APPDIR}"
     cd ${APPDIR}
     # --entrypoint /bin/ash -it
-#    docker container run --rm -v ${APPDIR}:/local swaggerapi/swagger-codegen-cli generate \
-#     --input-spec /local/${api} \
-#     --config /local/src/config/api-config.json \
-#     --output /local/clients/citypay-pos-${i}-client \
-#     --lang ${i}
+    docker container run --rm -v ${APPDIR}:/local swaggerapi/swagger-codegen-cli generate \
+     --input-spec /local/${api} \
+     --config /local/src/config/api-config.json \
+     --output /local/clients/citypay-pos-${i}-client \
+     --lang ${i}
 
-    git add .
+    git add --all .
 
     # clean up
     rm src/config/api-config.json

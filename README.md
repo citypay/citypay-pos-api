@@ -14,9 +14,14 @@ The API:
 
 We have provided a number of clients to use with the API available at
 
-- Android Client  https://github.com/citypay/citypay-pos-android-client 
-- Java Client https://github.com/citypay/citypay-pos-java-client 
-- Java PHP https://github.com/citypay/citypay-pos-php-client 
+- [Android Client](https://github.com/citypay/citypay-pos-android-client) 
+- [Java Client](https://github.com/citypay/citypay-pos-java-client) 
+- [JavaScript Client](https://github.com/citypay/citypay-pos-javascript-client) 
+- [PHP Client](https://github.com/citypay/citypay-pos-php-client) 
+- [C# Client](https://github.com/citypay/citypay-pos-csharp-client) 
+- [Go Client](https://github.com/citypay/citypay-pos-go-client) 
+- [Python Client](https://github.com/citypay/citypay-pos-python-client) 
+- [Scala Akka Client](https://github.com/citypay/citypay-pos-akka-scala-client) 
 
 
 ## API Overview
