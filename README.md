@@ -64,3 +64,33 @@ Class | Method | HTTP request | Description
 
 
 
+## Included Scripts
+
+The scripts are intended to be run in Linux or Mac OS and requires docker to be installed.
+
+The following scripts are included for working with the api
+
+### `build-clients.sh`
+
+Bulk builds and initalises client libraries in "android" "php" "java" "akka-scala" "python" "javascript" "go" "csharp" "typescript-angular".
+
+An integrator is recommended to manually clone the client library from its respective Github 
+location rather than running this script. The script will attempt to initially clone each languages
+repository from Github first. 
+
+### `build-docs.sh`
+
+Builds the documentation into the _docs_ directory
+
+### `mock-server.sh`
+
+Runs a mock server on port 8000 using [swagger-mock-api](https://www.npmjs.com/package/swagger-mock-api)
+
+HTTP headers for Cross-Origin Resource Sharing (CORS) are automatically set to allow any kind of access.
+
+| Header | Value |
+| -------|-------|
+| Access-Control-Allow-Origin | If the HTTP request includes an Origin header, then this value is echoed back; otherwise value is a wildcard * |
+| Access-Control-Allow-Credentials | If the Access-Control-Allow-Origin is a wildcard * value is false; otherwise true. |
+| Access-Control-Allow-Methods | All HTTP methods are always sent. |
+| Access-Control-Allow-Headers | If the HTTP request includes an Access-Control-Request-Headers header, then this value is echoed back; otherwise it is not set. |
