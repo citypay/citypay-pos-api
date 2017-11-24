@@ -2,7 +2,7 @@
 
 api=src/api/api.yaml
 APPDIR=${PWD}
-targets=( "android" "php" "java" "akka-scala" "python" "javascript" "go" "csharp" "typescript-angular")
+targets=( "android" ) # "php" ) # "java" "akka-scala" "python" "javascript" "go" "csharp" "typescript-angular")
 VERSION=$(grep 'version:' src/api/api.yaml | awk -F'"' '$0=$2')
 
 cat ${PWD}/.header
@@ -44,6 +44,12 @@ do
 
     echo "Generating ${i} client in ${APPDIR}"
     cd ${APPDIR}
+
+    if [ $i = "android" ];
+    then
+        ./kinetic-build.sh $i
+    fi
+
     # --entrypoint /bin/ash -it
     docker container run --rm -v ${APPDIR}:/local swaggerapi/swagger-codegen-cli generate \
      --input-spec /local/${api} \
