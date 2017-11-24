@@ -52,3 +52,5 @@ fabric.properties
 
 clients/
 src/config/config.json
+
+.gradle/
