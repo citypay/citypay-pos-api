@@ -1,0 +1,12 @@
+{
+	"sortParamsByRequiredFlag": true,
+	"ensureUniqueParams": true,
+	"modelPackage": "com.citypay.pos.kinetic.model",
+	"apiPackage": "com.citypay.pos.kinetic.api",
+	"groupId": "com.citypay.pos",
+	"artifactId": "citypay-pos-api-android",
+	"artifactVersion": "1.0.0",
+	"library": "volley"
+}
+
+
