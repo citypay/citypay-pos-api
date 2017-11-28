@@ -6,7 +6,8 @@
 	"groupId": "com.citypay.pos",
 	"artifactId": "citypay-pos-api-android",
 	"artifactVersion": "1.0.0",
-	"library": "volley"
+	"library": "volley",
+	"java8": true
 }
 
 
