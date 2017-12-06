@@ -11,10 +11,6 @@ info:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
 
-securityDefinitions:
-  BasicAuth:
-    type: basic
-
 paths:
 
   /ping.json:
@@ -34,8 +30,6 @@ paths:
     get:
       tags:
       - device
-      security:
-        - BasicAuth: []
       produces:
       - application/json
       summary:  Request the status of the battery on the device.
@@ -51,8 +45,6 @@ paths:
     post:
       tags:
       - payment
-      security:
-        - BasicAuth: []
       consumes:
       - application/json
       produces:
@@ -76,8 +68,6 @@ paths:
     post:
       tags:
       - payment
-      security:
-        - BasicAuth: []
       consumes:
       - application/json
       produces:
@@ -101,8 +91,6 @@ paths:
     post:
       tags:
       - payment
-      security:
-        - BasicAuth: []
       consumes:
       - application/json
       produces:
@@ -126,8 +114,6 @@ paths:
     post:
       tags:
       - payment
-      security:
-        - BasicAuth: []
       produces:
       - application/json
       summary: When this instruction is sent, the reconciliation process will be started and the transactions for the day closed. Important, no confirmation is prompted on the device.
@@ -143,8 +129,6 @@ paths:
     post:
       tags:
       - payment
-      security:
-        - BasicAuth: []
       consumes:
       - application/json
       produces:
@@ -169,7 +153,6 @@ paths:
       tags:
       - payment
       summary: Request the status of a transaction in progress or a complete transaction using the uuid as the reference.
-
         Depending on the state of the transaction, the response will indicate if it is not found, in progress (and the current stage in the transaction workflow) or complete (with all the disarmed transaction data).
       consumes:
       - application/json
