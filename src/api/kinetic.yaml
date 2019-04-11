@@ -26,18 +26,18 @@ paths:
           schema:
             $ref: '#/definitions/PingResponse'
 
-  /battery.json:
+  /info.json:
     get:
       tags:
       - device
       produces:
       - application/json
-      summary:  Request the status of the battery on the device.
+      summary:  Request information about the device.
       responses:
         200:
           description: Information on the given device
           schema:
-            $ref: '#/definitions/BatteryResponse'
+            $ref: '#/definitions/InfoResponse'
         403:
           description: Unauthorized access
 
@@ -149,20 +149,23 @@ paths:
           description: Unauthorized to access the device
 
   /transaction.json:
-    post:
+    get:
       tags:
       - payment
       summary: Request the status of a transaction in progress or a complete transaction using the uuid as the reference.
-        Depending on the state of the transaction, the response will indicate if it is not found, in progress (and the current stage in the transaction workflow) or complete (with all the disarmed transaction data).
+        Depending on the state of the transaction, the response will indicate if it is not found, in progress
+        (and the current stage in the transaction workflow) or complete (with all the disarmed transaction data).
       consumes:
       - application/json
       produces:
       - application/json
       parameters:
-      - name: body
-        in: body
+      - name: uuid
+        in: query
+        description: The unique identifier of the transaction
+        required: true
         schema:
-          $ref: '#/definitions/TransactionProgress'
+          type: string
       responses:
         200:
           description: Information regarding the progress of the transaction
@@ -182,15 +185,27 @@ definitions:
       ping:
         type: boolean
 
-  BatteryResponse:
+  InfoResponse:
     type: object
     properties:
-      success:
+      battery_charging:
         type: boolean
-      charging:
-        type: boolean
-      percentage:
+      battery_percentage:
         type: integer
+      busy:
+        type: boolean
+      connection_mode:
+        type: string
+      device:
+        type: string
+      portable:
+        type: boolean
+      printer:
+        type: boolean
+      serial:
+        type: string
+      update_ready:
+        type: boolean
 
   SaleRequest:
     type: object
@@ -287,33 +302,59 @@ definitions:
         example: 0600ee0b-69df-4b77-cbb5-8a20962a75ab
 
 
-  # here
-
-
-
   TransactionResult:
     type: object
     properties:
+      status:
+        type: string
+        description: Provides a textual status of the transaction
+        example: false
+      success:
+        type: boolean
+        description: Determines the status of the transaction  false returns that the transaction is in progress
+        example: false
+      description:
+        type: string
+        description: A string describing the status
+    additionalProperties: true
+
+  TransactionData:
+    type: object
+    properties:
+      acquirer_response:
+        type: string
+        description: The response string from the acquirer as per the ISO/Apacs specifications
+        example: "APPROVED"
       additional_data:
         type: string
-        description: additional data provided within the acquirer response
+        description: ISO/Apacs specifications additional data provided within the acquirer response
         example: "000800"
+      authorizing_entity:
+        type: string
+        description: The identity authorizing the transaction
+        example: "card issuer"
       auxiliary_data:
         type: string
-        description: Value provided by online processing
+        description: Value provided by online processing as per the ISO/Apacs specifications
         example: "CEAB962F"
+      base_amount:
+        type: integer
+        description: The base amount processed
+        example: 1
+      card_presented:
+        type: boolean
+        description: Whether the card was presented to the device
+        example: true
       card_type:
         type: string
         description: The type of card used such as EMV
         example: "EMV"
       completed_at:
-        type: string
-        description: The date and time that the transaction was completed in ISO-8166 format
-        example: '2017-11-01T08:54:23'
+        type: integer
+        description: The date and time that the transaction was completed in UTC seconds value
       created_at:
-        type: string
-        description: The date and time that the transaction was created in ISO-8166 format
-        example: '2017-11-01T08:54:09'
+        type: integer
+        description: The date and time that the transaction was completed in UTC seconds value
       currency_symbol:
         type: string
         description: The currency symbol used
@@ -321,6 +362,12 @@ definitions:
       customer_receipt:
         type: string
         description: The customer receipt to print
+      cvm_mode:
+        type: string
+        description: The card holder verification method used
+      datasource:
+        type: string
+        description: A string of the source of data
       declined_by_card:
         type: boolean
         description: Boolean value should the transaction be declined by the card
@@ -393,6 +440,10 @@ definitions:
         type: string
         description: ISO date of the transaction
         example: "2017-11-01"
+      emv_txn_sequence_counter:
+        type: string
+        description: A sequence counter of the transaction
+        example: "4"
       emv_txn_status_info:
         type: string
         description: Status info of the transaction
@@ -405,29 +456,53 @@ definitions:
         type: string
         description: The UN or unpredicatble number in the transaction process
         example: "FF10616"
+      is_api:
+        type: boolean
+        description: Determines if the card was API derived
+        example: true
+      is_closed:
+        type: boolean
+        description: Determines if the transaction is closed
+        example: true
       is_commercial_card:
-        type: string
+        type: boolean
         description: Determines if the card was a commercial card
         example: false
+      is_completed:
+        type: boolean
+        description: Determines if the transaction was completed
+        example: true
       is_contactless:
-        type: string
+        type: boolean
         description: Determines if the card was contactless
         example: true
       is_fallback:
-        type: string
+        type: boolean
         description: Determines if fallback was used
         example: false
       is_offline:
-        type: string
+        type: boolean
         description: Determines if the transaction was authorised offline
         example: false
+      is_pending:
+        type: boolean
+        description: Determines if the transaction is pending
+        example: false
       is_voided:
-        type: string
+        type: boolean
         description: Determines if the transaction was voided
         example: false
       merchant_receipt:
         type: string
         description: The merchant receipt
+      message_number:
+        type: string
+        description: The message number of the transaction
+        example: "2"
+      message_type:
+        type: string
+        description: The message type of the transaction
+        example: "debit_presentment"
       response_code:
         type: string
         description: A response code provided by the acquirer
@@ -445,7 +520,7 @@ definitions:
         description: A description of the card scheme for the card
         example: "visa-qvsdc"
       signature_required:
-        type: string
+        type: boolean
         description: Determines whether a signature was required for legacy systems
         example: false
       terminal_id:
@@ -460,36 +535,19 @@ definitions:
         type: string
         description: The type of transaction processed
         example: "sale"
+      uuid:
+        type: string
+        description: The unique id of the transaction
+        example: "pt-4"
+      verified_by_odcvm:
+        type: boolean
+        description: Determines if the transaction was verified by od cvm
+        example: false
       verified_by_pin:
         type: boolean
         description: Determines if the transaction was verified by pin entry
         example: false
 
-
-  DeviceInfo:
-    type: object
-    properties:
-      name:
-        type: string
-        description: The name of the device
-      serialno:
-        type: string
-        description: The serial number of the device
-      portable:
-        type: boolean
-        description: Whether the device is portable
-      busy:
-        type: boolean
-        description: Whether the device is busy or available for a transaction
-      battery_charging:
-        type: boolean
-        description: Whether the device is currently charging
-      battery_percentage:
-        type: integer
-        description: A percentage value of the battery
-      printer:
-        type: boolean
-        description: Whether the device has a printer
 
   Result:
     type: object

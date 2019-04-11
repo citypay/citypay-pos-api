@@ -3,8 +3,9 @@
 LOCDIR=$PWD
 FOLDER=$(basename $LOCDIR)
 PARENTDIR=$(dirname $PWD)
-targets=( "android" ) # "php" ) # "java" "akka-scala" "python" "javascript" "go" "csharp" "typescript-angular")
-VERSION=$(grep 'version:' src/api/api.yaml | awk -F'"' '$0=$2')
+targets=( "java" "csharp" "typescript-angular" ) # "php" ) # "java" "akka-scala" "python" "javascript" "go" "csharp" "typescript-angular")
+VERSION=$(grep "version:" src/api/api.yaml | cut -d'"' -f 2)
+
 
 SYNC_GIT=1
 
@@ -21,22 +22,10 @@ cat ${PWD}/.header
 echo "                                       ${rev} C1tyPAy ${VERSION} ${normal}"
 echo -e ${NC}
 
+RELEASE_NOTE=''
 
-codegen() {
-    # --entrypoint /bin/ash -it
-    docker container run --rm -v ${PARENTDIR}:/local swaggerapi/swagger-codegen-cli generate \
-     --input-spec /local/${FOLDER}/src/api/${1} \
-     --config /local/${FOLDER}/src/config/${2} \
-     --output /local/citypay-pos-${lang}-client \
-     --lang ${lang}
-}
-
-pop_version() {
-    cd ${LOCDIR}
-    # update the json configuration file with the current versioning, required for some packages
-    jq '.artifactVersion = "${VERSION}"' src/config/api-${1}-config.json > src/config/api-config.json
-    jq '.packageVersion = "${VERSION}"'  src/config/api-${1}-config.json > src/config/api-config.json
-}
+echo -n "> Release note:"
+read -r RELEASE_NOTE
 
 sync_git() {
     # if the directory does not exist, clone from github
@@ -57,14 +46,51 @@ sync_git() {
 }
 
 
+pop_version() {
+    cd ${LOCDIR}
+    # update the json configuration file with the current versioning, required for some packages
+    jq '.artifactVersion = "${VERSION}"' src/config/api-${1}-config.json > src/config/api-config.json
+    jq '.packageVersion = "${VERSION}"'  src/config/api-${1}-config.json > src/config/api-config.json
+}
+
 for lang in "${targets[@]}"
 do
 
-    echo -n "> Build ${bold}${lang}${normal} client? [y|N|q] "
+    LANG_LOWER=$(echo "$lang" | awk '{print tolower($0)}')
+    DEST="citypay-pos-${LANG_LOWER}-client"
+    USER_AGENT="citypay-${LANG_LOWER}-client/${VERSION}"
+
+    langopts() {
+            # --entrypoint /bin/ash -it
+        docker container run --rm \
+         -v ${PARENTDIR}:/local swaggerapi/swagger-codegen-cli config-help \
+         --lang ${lang}
+    }
+
+    codegen() {
+        # --entrypoint /bin/ash -it
+        docker container run --rm \
+         -v ${PARENTDIR}:/local swaggerapi/swagger-codegen-cli generate \
+         --input-spec /local/${FOLDER}/src/api/${1} \
+         --config /local/${FOLDER}/src/config/${2} \
+         --output /local/${DEST} \
+         --release-note "${RELEASE_NOTE}" \
+         --http-user-agent "${USER_AGENT}" \
+         -t /local/${FOLDER}/src/templates/${lang} \
+         --lang ${lang}
+    }
+
+    echo -n "> Build ${bold}${lang}${normal} client? [y|N|h|q] "
     read -r response
 
     if [[ "$response" =~ ^([qQ][uU][iI]|[tT])+$  ]]
     then
+        exit 0
+    fi
+
+    if [[ "$response" =~ ^([hH])+$ ]]
+    then
+        docker container run --rm  swaggerapi/swagger-codegen-cli config-help --lang ${lang}
         exit 0
     fi
 
@@ -73,9 +99,8 @@ do
 
         pop_version $lang
 
-        APP=citypay-pos-${lang}-client
-        TARGETDIR=${PARENTDIR}/${APP}
-        GITHUB=https://github.com/citypay/${APP}
+        TARGETDIR=${PARENTDIR}/${DEST}
+        GITHUB=https://github.com/citypay/${DEST}
 
         echo -e "\n\n=============================================================================="
         echo -e "Init ${lang} client, repo: ${GITHUB}\n${BLUE}"
@@ -85,28 +110,36 @@ do
         echo -e "${NC}Generating ${lang} client in ${TARGETDIR}${LGR}"
         cd ${LOCDIR}
 
-        if [ $lang = "android" ];
-        then
 
-            echo " Kinetic... "
-            # create kinetic directory for docs, move any existing into a temp location
-            mkdir -p ${TARGETDIR}/docs/kinetic
-            mkdir -p ${TARGETDIR}/docs/temp
+        echo " Kinetic... "
+        # create kinetic directory for docs, move any existing into a temp location
+        mkdir -p ${TARGETDIR}/docs/kinetic
+        mkdir -p ${TARGETDIR}/docs/temp
 
-            cd ${TARGETDIR}/docs
-            mv *.md temp/
-            codegen "kinetic.yaml" "kinetic-${lang}-config.json"
+        cd ${TARGETDIR}/docs
+        mv *.md temp/
+        codegen "kinetic.yaml" "kinetic-${lang}-config.json"
 
-            # move constructed docs to kinetic folder
-            cd ${TARGETDIR}/docs
-            mv *.md kinetic/
-            mv temp/*.md ./
-            rmdir temp
-            cd LOCDIR
+        pwd
+        ls -al
 
-            echo " ... >> "
-        fi
 
+        # move constructed docs to kinetic folder
+        cd ${TARGETDIR}/docs
+        mv *.md kinetic/
+        mv temp/*.md ./
+        rmdir temp
+        cd LOCDIR
+
+        echo " ... >> "
+
+        # clean any files that want to be overwritten
+        rm ${TARGETDIR}/pom.xml
+        rm ${TARGETDIR}/README.md
+        rm ${TARGETDIR}/build.gradle
+        rm ${TARGETDIR}/*.sln
+
+#        langopts
         codegen "api.yaml" "api-config.json"
 
         cd ${TARGETDIR}
@@ -114,7 +147,7 @@ do
 
         # clean up
         cd ${LOCDIR}
-        rm src/config/api-config.json
+#        rm src/config/api-config.json
 
         echo -e "${NC}Creating ${lang} client complete"
 

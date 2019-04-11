@@ -201,16 +201,16 @@ paths:
       - name: body
         in: body
         schema:
-          $ref: '#/definitions/TransactionProgress'
+          $ref: '#/definitions/PrintRequest'
       responses:
         200:
           description: Information regarding the progress of the transaction
           schema:
-            $ref: '#/definitions/TransactionResult'
+            $ref: '#/definitions/Receipt'
         403:
           description: Unauthorized to access the device
           schema:
-            $ref: '#/definitions/SuccessResponse'
+            $ref: '#/definitions/Result'
 
 
   /transaction:
@@ -264,7 +264,12 @@ definitions:
     type: object
     required:
     - identifier
+    - device
     properties:
+      device:
+        type: string
+        description: The name of the target device used by the API. The device will be setup prior to the sale but allows targeting of multiple devices.
+        example: TID001
       identifier:
         type: string
         description: Must include an identifier for a transaction that has been carried out on the device
@@ -277,7 +282,12 @@ definitions:
     type: object
     required:
       - identifier
+      - device
     properties:
+      device:
+        type: string
+        description: The name of the target device used by the API. The device will be setup prior to the sale but allows targeting of multiple devices.
+        example: TID001
       identifier:
         type: string
         description: The identifier used to instigate the transaction
@@ -295,6 +305,9 @@ definitions:
         type: string
         description: The indentifier uniquely identifying the transaction
         example: Tx12345
+      success:
+        type: boolean
+        description: A boolean value stating whether the transaction is available to be returned for inspection
       is_complete:
         type: boolean
         description: A boolean value stating whether the transaction has completed. The value will be false if the transaction is in progress. Should the value be true, a property containing the transaction details is made available.
@@ -304,9 +317,9 @@ definitions:
   Receipt:
     type: object
     properties:
-      customer:
+      receipt:
         type: string
-        description: The customer receipt to be printed or stored
+        description: The receipt to be printed or stored
 
 
   TransactionData:
@@ -320,6 +333,14 @@ definitions:
         type: string
         description: Value provided by online processing
         example: "CEAB962F"
+      amount:
+        type: integer
+        description: The base amount processed
+        example: 1
+      card_presented:
+        type: boolean
+        description: Whether the card was presented to the device
+        example: true
       card_type:
         type: string
         description: The type of card used such as EMV
@@ -336,6 +357,15 @@ definitions:
         type: string
         description: The currency symbol used
         example: "£"
+      customer_receipt:
+        type: string
+        description: The customer receipt to print
+      cvm_mode:
+        type: string
+        description: The card holder verification method used
+      datasource:
+          type: string
+          description: A string of the source of data
       declined_by_card:
         type: boolean
         description: Boolean value should the transaction be declined by the card
@@ -420,26 +450,37 @@ definitions:
         type: string
         description: The UN or unpredicatble number in the transaction process
         example: "FF10616"
+      is_closed:
+        type: boolean
+        description: Determines if the transaction is closed
+        example: true
       is_commercial_card:
-        type: string
+        type: boolean
         description: Determines if the card was a commercial card
         example: false
+      is_completed:
+        type: boolean
+        description: Determines if the transaction was completed
+        example: true
       is_contactless:
-        type: string
+        type: boolean
         description: Determines if the card was contactless
         example: true
       is_fallback:
-        type: string
+        type: boolean
         description: Determines if fallback was used
         example: false
       is_offline:
-        type: string
+        type: boolean
         description: Determines if the transaction was authorised offline
         example: false
       is_voided:
-        type: string
+        type: boolean
         description: Determines if the transaction was voided
         example: false
+      merchant_receipt:
+        type: string
+        description: The merchant receipt
       response_code:
         type: string
         description: A response code provided by the acquirer
@@ -457,7 +498,7 @@ definitions:
         description: A description of the card scheme for the card
         example: "visa-qvsdc"
       signature_required:
-        type: string
+        type: boolean
         description: Determines whether a signature was required for legacy systems
         example: false
       terminal_id:
@@ -476,6 +517,10 @@ definitions:
         type: boolean
         description: Determines if the transaction was verified by pin entry
         example: false
+      identifier:
+        type: string
+        description: The identifier of the transaction
+        example: "pt-4"
 
 
   DeviceInfo:
@@ -502,6 +547,9 @@ definitions:
       printer:
         type: boolean
         description: Whether the device has a printer
+      connection_mode:
+        type: string
+        description: The type of connection to the device such as wifi, bluetooth
 
   Result:
     type: object
@@ -542,7 +590,12 @@ definitions:
     type: object
     required:
     - identifier
+    - device
     properties:
+      device:
+        type: string
+        description: The name of the target device used by the API. The device will be setup prior to the sale but allows targeting of multiple devices.
+        example: TID001
       identifier:
         type: string
         description: The identifier of a transaction to reverse

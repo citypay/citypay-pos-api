@@ -1,0 +1,12 @@
+{
+  "packageName": "CityPay.Pos.Api",
+  "packageVersion": "${VERSION}",
+  "sourceFolder": "src",
+  "packageGuid": "a8de5cd8-8af9-4786-a3cc-8725c07da9b9",
+  "interfacePrefix": "I",
+  "targetFramework": "v4.5",
+  "modelPropertyNaming": "PascalCase",
+  "nonPublicApi": true,
+  "netCoreProjectFile": true,
+  "validatable": false
+}

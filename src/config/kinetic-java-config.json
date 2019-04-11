@@ -1,8 +1,8 @@
 {
   "sortParamsByRequiredFlag": true,
   "ensureUniqueParams": true,
-  "modelPackage": "com.citypay.pos.model",
-  "apiPackage": "com.citypay.pos.api.remote",
+  "modelPackage": "com.citypay.pos.model.kinetic",
+  "apiPackage": "com.citypay.pos.api.kinetic",
   "invokerPackage": "com.citypay.invoker",
   "groupId": "com.citypay.pos",
   "artifactId": "citypay-pos-api-java",
@@ -20,5 +20,8 @@
   "scmDeveloperConnection": "https://github.com/citypay/citypay-pos-java-client",
   "scmConnection": "git@github.com:citypay/citypay-pos-java-client.git"
 }
+
+
+
 
 

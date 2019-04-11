@@ -1,12 +1,6 @@
 {
-	"npmName": "citypay-pos-api",
-	"npmVersion": "$VERSION",
-	"useNgPackagr": true,
-	"useRxJS6": false,
 	"sortParamsByRequiredFlag": true,
 	"ensureUniqueParams": true,
 	"modelPropertyNaming": "camelCase",
 	"supportsES6": true
 }
-
-
