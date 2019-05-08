@@ -240,7 +240,7 @@ definitions:
   ReversalRequest:
     type: object
     required:
-    - uuid
+    - reference_uuid
     properties:
       uuid:
         type: string
