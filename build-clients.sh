@@ -4,7 +4,7 @@ LOCDIR=$PWD
 FOLDER=$(basename $LOCDIR)
 PARENTDIR=$(dirname $PWD)
 targets=( "java" "csharp" "typescript-angular" ) # "php" ) # "java" "akka-scala" "python" "javascript" "go" "csharp" "typescript-angular")
-VERSION=$(grep "version:" src/api/api.yaml | cut -d'"' -f 2)
+export VERSION=$(grep "version:" src/api/api.yaml | cut -d'"' -f 2)
 
 
 SYNC_GIT=1
@@ -19,7 +19,7 @@ normal=$(tput sgr0)
 
 echo -e $LGR
 cat ${PWD}/.header
-echo "                                       ${rev} C1tyPAy ${VERSION} ${normal}"
+echo "                                       ${rev} CityPay ${VERSION} ${normal}"
 echo -e ${NC}
 
 RELEASE_NOTE=''
@@ -48,9 +48,11 @@ sync_git() {
 
 pop_version() {
     cd ${LOCDIR}
+    echo "POPVer"
     # update the json configuration file with the current versioning, required for some packages
-    jq '.artifactVersion = "${VERSION}"' src/config/api-${1}-config.json > src/config/api-config.json
-    jq '.packageVersion = "${VERSION}"'  src/config/api-${1}-config.json > src/config/api-config.json
+    jq --arg VERSION "$VERSION" '.artifactVersion = $VERSION' src/config/api-${1}-config.json > src/config/api-config.json
+    echo "POPVer.Net $VERSION"
+    jq --arg VERSION "$VERSION" '.packageVersion = $VERSION'  src/config/api-${1}-config.json > src/config/api-config.json
 }
 
 for lang in "${targets[@]}"
@@ -97,8 +99,6 @@ do
     if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]
     then
 
-        pop_version $lang
-
         TARGETDIR=${PARENTDIR}/${DEST}
         GITHUB=https://github.com/citypay/${DEST}
 
@@ -111,6 +111,10 @@ do
         cd ${LOCDIR}
 
 
+        pop_version $lang
+        codegen "api.yaml" "api-config.json"
+
+        cd ${LOCDIR}
         echo " Kinetic... "
         # create kinetic directory for docs, move any existing into a temp location
         mkdir -p ${TARGETDIR}/docs/kinetic
@@ -129,7 +133,7 @@ do
         mv *.md kinetic/
         mv temp/*.md ./
         rmdir temp
-        cd LOCDIR
+        cd ${LOCDIR}
 
         echo " ... >> "
 
@@ -140,7 +144,6 @@ do
         rm ${TARGETDIR}/*.sln
 
 #        langopts
-        codegen "api.yaml" "api-config.json"
 
         cd ${TARGETDIR}
         git add --all .

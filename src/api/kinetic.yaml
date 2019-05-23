@@ -242,7 +242,7 @@ definitions:
     required:
     - reference_uuid
     properties:
-      uuid:
+      reference_uuid:
         type: string
         description: Must include the unique identifier (uuid) for the transaction transaction to be reversed.
         example: 0600ee0b-69df-4b77-cbb5-8a20962a75ab
